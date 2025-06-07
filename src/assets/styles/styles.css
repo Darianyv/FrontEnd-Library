@@ -238,3 +238,24 @@ body {
   border-top: 1px solid #34495e;
   padding-top: 1rem;
 }
+.user-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.user-actions .btn {
+  background-color: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.user-actions .btn:hover {
+  background-color: #fff;
+  color: #333;
+}
+

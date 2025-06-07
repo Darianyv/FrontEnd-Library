@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import '../assets/styles/styles.css';
+import AuthButtons from './AuthButtons';
 
 function Home() {
   const libros = [
@@ -62,10 +63,7 @@ function Home() {
             <li><Link className="active" to="/prestamos">Préstamos</Link></li>
           </ul>
         </nav>
-        <div className="user-actions">
-          <button className="btn login">Iniciar sesión</button>
-          <button className="btn register">Registrarse</button>
-        </div>
+        <AuthButtons />
       </header>
 
       {/* Main Content */}

@@ -6,12 +6,16 @@ import Libros from './pages/Libros';
 import Prestamos from './pages/Prestamos';
 import CategoriaPage from './pages/CategoriaPage';
 import CategoriaDetalle from './components/CategoriaDetalle';
+import Login from './pages/Login';
+import Registro from './pages/Registro';
 
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/registro" element={<Registro />} />
       <Route path="/autores" element={<Autores />} />
       <Route path="/categoria" element={<Categoria />} />
       <Route path="/libros" element={<Libros />} />
