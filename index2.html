@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sombras y letras</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+         <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <h1>Sombras y letras</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="./index2.html">Inicio</a></li>
+                    <li><a href="./Libros.html">Libros</a></li>
+                    <li><a href="./Autores.html">Autores</a></li>
+                    <li><a href="./categoria.html">Categorías</a></li>
+                    <li><a href="./prestamos.html" class="active">Préstamos</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button class="btn login">Iniciar sesión</button>
+                <button class="btn register">Registrarse</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h2>Explora nuestro catálogo de libros</h2>
+                    <p>Encuentra tu próxima lectura favorita entre miles de títulos disponibles</p>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Buscar libros...">
+                        <button class="btn search-btn">
+                            <i class="fas fa-search"></i> Buscar
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Featured Books -->
+            <section class="featured-books">
+                <h2>Libros destacados</h2>
+                <div class="books-grid">
+                    <!-- Book Card 1 -->
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="https://m.media-amazon.com/images/I/71tR3ZEQ2BL._AC_UF1000,1000_QL80_.jpg" alt="Portada del libro">
+                        </div>
+                        <div class="book-info">
+                            <h3>Cien años de soledad</h3>
+                            <p class="author">Gabriel García Márquez</p>
+                            <div class="book-meta">
+                                <span class="category">Novela</span>
+                                <span class="year">1967</span>
+                            </div>
+                            <button class="btn details-btn">Ver detalles</button>
+                        </div>
+                    </div>
+
+                    <!-- Book Card 2 -->
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="https://m.media-amazon.com/images/I/71X1p4TGlxL._AC_UF1000,1000_QL80_.jpg" alt="Portada del libro">
+                        </div>
+                        <div class="book-info">
+                            <h3>El Principito</h3>
+                            <p class="author">Antoine de Saint-Exupéry</p>
+                            <div class="book-meta">
+                                <span class="category">Fábula</span>
+                                <span class="year">1943</span>
+                            </div>
+                            <button class="btn details-btn">Ver detalles</button>
+                        </div>
+                    </div>
+
+                    <!-- Book Card 3 -->
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="https://m.media-amazon.com/images/I/81dQwQlmAXL._AC_UF1000,1000_QL80_.jpg" alt="Portada del libro">
+                        </div>
+                        <div class="book-info">
+                            <h3>1984</h3>
+                            <p class="author">George Orwell</p>
+                            <div class="book-meta">
+                                <span class="category">Ciencia Ficción</span>
+                                <span class="year">1949</span>
+                            </div>
+                            <button class="btn details-btn">Ver detalles</button>
+                        </div>
+                    </div>
+
+                    <!-- Book Card 4 -->
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="https://m.media-amazon.com/images/I/91SZSW8qSsL._AC_UF1000,1000_QL80_.jpg" alt="Portada del libro">
+                        </div>
+                        <div class="book-info">
+                            <h3>Don Quijote de la Mancha</h3>
+                            <p class="author">Miguel de Cervantes</p>
+                            <div class="book-meta">
+                                <span class="category">Clásico</span>
+                                <span class="year">1605</span>
+                            </div>
+                            <button class="btn details-btn">Ver detalles</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories Section -->
+            <section class="categories">
+                <h2>Explora por categorías</h2>
+                <div class="categories-grid">
+                    <div class="category-card">
+                        <i class="fas fa-book"></i>
+                        <h3>Literatura</h3>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-flask"></i>
+                        <h3>Ciencia</h3>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>Tecnología</h3>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-brain"></i>
+                        <h3>Psicología</h3>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Negocios</h3>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-history"></i>
+                        <h3>Historia</h3>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <h3>Sobre nosotros</h3>
+                    <p>Biblioteca Digital es un proyecto dedicado a promover la lectura y el acceso al conocimiento.</p>
+                </div>
+                <div class="footer-section links">
+                    <h3>Enlaces rápidos</h3>
+                    <ul>
+                        <li><a href="#">Política de privacidad</a></li>
+                        <li><a href="#">Términos de servicio</a></li>
+                        <li><a href="#">Contacto</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section contact">
+                    <h3>Contacto</h3>
+                    <p><i class="fas fa-envelope"></i> contacto@bibliotecadigital.com</p>
+                    <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Biblioteca Digital. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+    </div>
+    <script src="../js/index.js"></script>
+</body>
+</html>
