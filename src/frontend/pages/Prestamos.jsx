@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../assets/styles/prestamos.css';
+import Footer from '../components/Footer';
+import HeaderFront from '../components/HeaderFront';
 
 function Prestamos() {
   const [dias, setDias] = useState('');
@@ -23,22 +25,8 @@ function Prestamos() {
 
   return (
     <div className="app-container">
-      {/* Header */}
-      <header className="header">
-        <div className="logo">
-          <i className="fas fa-book-open"></i>
-          <h1>Biblioteca Digital</h1>
-        </div>
-        <nav className="nav">
-          <ul>
-            <li><Link to="/">Inicio</Link></li>
-            <li><Link to="/libros">Libros</Link></li>
-            <li><Link to="/autores">Autores</Link></li>
-            <li><Link to="/categoria">Categorías</Link></li>
-            <li><Link className="active" to="/prestamos">Préstamos</Link></li>
-          </ul>
-        </nav>
-      </header>
+
+      <HeaderFront />
 
       {/* Main Content */}
       <main className="main-content">
@@ -98,6 +86,7 @@ function Prestamos() {
           </form>
         </section>
       </main>
+      <Footer />
     </div>
   );
 }

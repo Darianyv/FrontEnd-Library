@@ -1,29 +1,14 @@
 import { Link } from 'react-router-dom';
 import '../../assets/styles/autores.css';
+import Footer from '../components/Footer';
+import HeaderFront from '../components/HeaderFront';
+
 
 function Autores() {
   return (
     <div className="app-container">
-      {/* Header */}
-      <header className="header">
-        <div className="logo">
-          <i className="fas fa-book-open"></i>
-          <h1>Biblioteca Digital</h1>
-        </div>
-        <nav className="nav">
-          <ul>
-            <li><Link to="/">Inicio</Link></li>
-            <li><Link to="/libros">Libros</Link></li>
-            <li><Link className="active" to="/autores">Autores</Link></li>
-            <li><Link to="/categoria">Categorías</Link></li>
-            <li><Link to="/prestamos">Préstamos</Link></li>
-          </ul>
-        </nav>
-        <div className="user-actions">
-          <button className="btn login">Iniciar sesión</button>
-          <button className="btn register">Registrarse</button>
-        </div>
-      </header>
+      
+      <HeaderFront />
 
       {/* Main Content */}
       <main className="main-content">
@@ -138,6 +123,7 @@ function Autores() {
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   );
 }

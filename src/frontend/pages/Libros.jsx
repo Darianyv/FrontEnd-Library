@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../assets/styles/libros.css';
+import Footer from '../components/Footer';
+import HeaderFront from '../components/HeaderFront';
 
 const booksData = [
   {
@@ -45,25 +47,9 @@ function Libros() {
 
   return (
     <div className="app-container">
-      <header className="header">
-        <div className="logo">
-          <i className="fas fa-book-open"></i>
-          <h1>Biblioteca Digital</h1>
-        </div>
-        <nav className="nav">
-          <ul>
-            <li><Link to="/">Inicio</Link></li>
-            <li><Link className="active" to="/libros">Libros</Link></li>
-            <li><Link to="/autores">Autores</Link></li>
-            <li><Link to="/categoria">Categorías</Link></li>
-            <li><Link to="/prestamos">Préstamos</Link></li>
-          </ul>
-        </nav>
-        <div className="user-actions">
-          <button className="btn login">Iniciar sesión</button>
-          <button className="btn register">Registrarse</button>
-        </div>
-      </header>
+
+      <HeaderFront />
+      
 
       <main className="main-content">
         <section className="books-gallery">
@@ -109,37 +95,7 @@ function Libros() {
           </div>
         </section>
       </main>
-
-      <footer className="footer">
-        <div className="footer-content">
-          <div className="footer-section about">
-            <h3>Sobre nosotros</h3>
-            <p>Biblioteca Digital es un proyecto dedicado a promover la lectura y el acceso al conocimiento.</p>
-          </div>
-          <div className="footer-section links">
-            <h3>Enlaces rápidos</h3>
-            <ul>
-              <li><a href="#">Política de privacidad</a></li>
-              <li><a href="#">Términos de servicio</a></li>
-              <li><a href="#">Contacto</a></li>
-              <li><a href="#">FAQ</a></li>
-            </ul>
-          </div>
-          <div className="footer-section contact">
-            <h3>Contacto</h3>
-            <p><i className="fas fa-envelope"></i> contacto@bibliotecadigital.com</p>
-            <p><i className="fas fa-phone"></i> +1 234 567 890</p>
-            <div className="social-icons">
-              <a href="#"><i className="fab fa-facebook"></i></a>
-              <a href="#"><i className="fab fa-twitter"></i></a>
-              <a href="#"><i className="fab fa-instagram"></i></a>
-            </div>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <p>© 2023 Biblioteca Digital. Todos los derechos reservados.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

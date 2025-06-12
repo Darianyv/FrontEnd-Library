@@ -8,7 +8,7 @@ import CategoriaPage from './frontend/pages/CategoriaPage';
 import CategoriaDetalle from './frontend/components/CategoriaDetalle';
 import Login from './frontend/pages/Login';
 import Registro from './frontend/pages/Registro';
-import Footer from './admin/components/Footer';
+import Footer from './frontend/components/Footer';
 import Aside from './admin/components/Aside';
 import Content from './admin/components/Content';
 import Header from './admin/components/Header';
@@ -38,7 +38,6 @@ function App() {
                 <Header />
                 <Aside />
                 <Content />
-                <Footer />
               </>
             </ProtectedRoute>
           }
