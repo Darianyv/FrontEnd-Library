@@ -12,7 +12,7 @@ function Home() {
       autor: "Gabriel García Márquez",
       categoria: "Novela",
       anio: 1967,
-      img: "https://m.media-amazon.com/images/I/71tR3ZEQ2BL._AC_UF1000,1000_QL80_.jpg"
+      img: "https://www.alianzalibros.com/wp-content/uploads/2024/11/cien-anos-de-soledad.webp"
     },
     {
       titulo: "El Principito",
@@ -60,7 +60,7 @@ function Home() {
             <li><Link to="/libros">Libros</Link></li>
             <li><Link to="/autores">Autores</Link></li>
             <li><Link to="/categoria">Categorías</Link></li>
-            <li><Link className="active" to="/prestamos">Préstamos</Link></li>
+            <li><Link to="/prestamos">Préstamos</Link></li>
           </ul>
         </nav>
         <AuthButtons />
