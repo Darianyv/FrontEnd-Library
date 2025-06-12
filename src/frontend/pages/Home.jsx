@@ -52,7 +52,7 @@ function Home() {
       <header className="header">
         <div className="logo">
           <i className="fas fa-book-open"></i>
-          <h1>Biblioteca Digital</h1>
+          <h1>Sombras & Letras</h1>
         </div>
         <nav className="nav">
           <ul>
@@ -131,18 +131,10 @@ function Home() {
             <h3>Sobre nosotros</h3>
             <p>Biblioteca Digital es un proyecto dedicado a promover la lectura y el acceso al conocimiento.</p>
           </div>
-          <div className="footer-section links">
-            <h3>Enlaces rápidos</h3>
-            <ul>
-              <li><a href="#">Política de privacidad</a></li>
-              <li><a href="#">Términos de servicio</a></li>
-              <li><a href="#">Contacto</a></li>
-              <li><a href="#">FAQ</a></li>
-            </ul>
-          </div>
+
           <div className="footer-section contact">
             <h3>Contacto</h3>
-            <p><i className="fas fa-envelope"></i> contacto@bibliotecadigital.com</p>
+            <p><i className="fas fa-envelope"></i>contacto@sombrasyletras.com</p>
             <p><i className="fas fa-phone"></i> +1 234 567 890</p>
             <div className="social-icons">
               <a href="#"><i className="fab fa-facebook"></i></a>
@@ -152,7 +144,7 @@ function Home() {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© 2023 Biblioteca Digital. Todos los derechos reservados.</p>
+          <p>© 2025 Sombras y letras. Todos los derechos reservados.</p>
         </div>
       </footer>
     </div>

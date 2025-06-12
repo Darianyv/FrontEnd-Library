@@ -8,7 +8,7 @@ const booksData = [
     author: 'Gabriel García Márquez',
     category: 'Novela',
     rating: 4.8,
-    image: 'https://m.media-amazon.com/images/I/71tR3ZEQ2BL._AC_UF1000,1000_QL80_.jpg'
+    image: 'https://www.alianzalibros.com/wp-content/uploads/2024/11/cien-anos-de-soledad.webp'
   },
   {
     title: '1984',
