@@ -1,4 +1,3 @@
-// src/components/AuthButtons.jsx
 import { useNavigate } from 'react-router-dom';
 
 function AuthButtons() {

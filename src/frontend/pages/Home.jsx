@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import '../assets/styles/styles.css';
+import '../../assets/styles/home.css';
 import AuthButtons from './AuthButtons';
 
 function Home() {

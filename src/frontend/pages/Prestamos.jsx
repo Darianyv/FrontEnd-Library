@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../assets/styles/prestamos.css';
+import '../../assets/styles/prestamos.css';
 
 function Prestamos() {
   const [dias, setDias] = useState('');

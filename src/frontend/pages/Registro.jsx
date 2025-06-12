@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../assets/styles/auth.css';
+import '../../assets/styles/auth.css';
 
 export default function Registro() {
   const [form, setForm] = useState({ username: '', password: '', role: 'cliente' });

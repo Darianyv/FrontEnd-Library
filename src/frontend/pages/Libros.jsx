@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../assets/styles/libros.css';
+import '../../assets/styles/libros.css';
 
 const booksData = [
   {

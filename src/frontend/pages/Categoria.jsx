@@ -1,6 +1,5 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import '../assets/styles/categoria.css';
+import '../../assets/styles/categoria.css';
 
 const categorias = [
   {
