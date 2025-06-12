@@ -12,6 +12,7 @@ import Footer from './admin/components/Footer';
 import Aside from './admin/components/Aside';
 import Content from './admin/components/Content';
 import Header from './admin/components/Header';
+import ProtectedRoute from './frontend/components/ProtectedRoute';
 
 
 
@@ -19,11 +20,15 @@ function App() {
   return (
       <>
       
-      <Header />
-      <Aside />
-      <Content />
-      <Footer />
-      
+      <ProtectedRoute role="admin">
+        <>
+          <Header />
+          <Aside />
+          <Content />
+          <Footer />
+        </>
+      </ProtectedRoute>
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

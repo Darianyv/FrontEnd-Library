@@ -12,7 +12,7 @@
   margin-bottom: 1.5rem;
   text-align: center;
   font-size: 1.8rem;
-  color: #ffcc00;
+  color: #5b8df6;
 }
 
 .auth-container input,
@@ -27,7 +27,7 @@
 .auth-container button {
   width: 100%;
   padding: 10px;
-  background-color: #ffcc00;
+  background-color: #5b8df6;
   color: #000;
   font-weight: bold;
   border: none;
