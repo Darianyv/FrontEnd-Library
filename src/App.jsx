@@ -15,21 +15,9 @@ import Header from './admin/components/Header';
 import ProtectedRoute from './frontend/components/ProtectedRoute';
 import './assets/styles/styles.css';
 
-
-
 function App() {
   return (
-      <>
-      
-      <ProtectedRoute role="admin">
-        <>
-          <Header />
-          <Aside />
-          <Content />
-          <Footer />
-        </>
-      </ProtectedRoute>
-
+    <>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -40,9 +28,23 @@ function App() {
         <Route path="/prestamos" element={<Prestamos />} />
         <Route path="/CategoriaPage" element={<CategoriaPage />} />
         <Route path="/CategoriaDetalle" element={<CategoriaDetalle />} />
+
+        {/* Ruta protegida para admin */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute role="admin">
+              <>
+                <Header />
+                <Aside />
+                <Content />
+                <Footer />
+              </>
+            </ProtectedRoute>
+          }
+        />
       </Routes>
-      
-      </>
+    </>
   );
 }
 

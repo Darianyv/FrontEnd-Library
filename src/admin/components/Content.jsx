@@ -8,9 +8,6 @@ export default function Content() {
         
         {/* Main Content */}
         <div id="content">
-         
-          <Header/>
-          
         </div>
       </div>
     </>
