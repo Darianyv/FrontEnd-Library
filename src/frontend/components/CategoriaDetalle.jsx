@@ -5,7 +5,7 @@ function CategoriaDetalle() {
 
   return (
     <div style={{ padding: '2rem' }}>
-      <h2>Categoría: {nombre.replace('-', ' ')}</h2>
+      <h2>Categoría: {nombre ? nombre.replace(/-/g, ' ') : 'Desconocida'}</h2>
       <p>Aquí puedes mostrar los libros de esta categoría.</p>
     </div>
   );

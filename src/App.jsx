@@ -17,22 +17,26 @@ import Header from './admin/components/Header';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/registro" element={<Registro />} />
-      <Route path="/autores" element={<Autores />} />
-      <Route path="/categoria" element={<Categoria />} />
-      <Route path="/libros" element={<Libros />} />
-      <Route path="/prestamos" element={<Prestamos />} />
-      <Route path="/CategoriaPage" element={<CategoriaPage />} />
-      <Route path="/CategoriaDetalle" element={<CategoriaDetalle />} />
-        <Header/>
-        <Aside />
-        <Content />
-        <Footer />
-
-    </Routes>
+      <>
+      
+      <Header />
+      <Aside />
+      <Content />
+      <Footer />
+      
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Registro />} />
+        <Route path="/autores" element={<Autores />} />
+        <Route path="/categoria" element={<Categoria />} />
+        <Route path="/libros" element={<Libros />} />
+        <Route path="/prestamos" element={<Prestamos />} />
+        <Route path="/CategoriaPage" element={<CategoriaPage />} />
+        <Route path="/CategoriaDetalle" element={<CategoriaDetalle />} />
+      </Routes>
+      
+      </>
   );
 }
 

@@ -7,4 +7,3 @@ export default function ProtectedRoute({ children, role }) {
   if (role && user.role !== role) return <Navigate to="/" />;
   return children;
 }
-
