@@ -8,7 +8,6 @@ import CategoriaPage from './frontend/pages/CategoriaPage';
 import CategoriaDetalle from './frontend/components/CategoriaDetalle';
 import Login from './frontend/pages/Login';
 import Registro from './frontend/pages/Registro';
-import Footer from './frontend/components/Footer';
 import Aside from './admin/components/Aside';
 import Content from './admin/components/Content';
 import Header from './admin/components/Header';
@@ -34,11 +33,13 @@ function App() {
           path="/admin"
           element={
             <ProtectedRoute role="admin">
-              <>
-                <Header />
+              <div className="d-flex">
                 <Aside />
-                <Content />
-              </>
+                <div className="flex-grow-1">
+                  <Header />
+                  <Content />
+                </div>
+              </div>
             </ProtectedRoute>
           }
         />

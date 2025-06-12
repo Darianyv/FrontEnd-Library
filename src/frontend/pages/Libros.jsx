@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import '../../assets/styles/libros.css';
 import Footer from '../components/Footer';
 import HeaderFront from '../components/HeaderFront';
+import BookCard from '../components/BookCard';
 
 const booksData = [
   {
@@ -47,21 +48,20 @@ function Libros() {
 
   return (
     <div className="app-container">
-
       <HeaderFront />
 
       <main className="main-content">
-        <section className="books-gallery">
-          <div className="gallery-header">
-            <h2 className="section-title">Galería de Libros</h2>
-            <p className="section-subtitle">Explora nuestra colección completa</p>
+        <section className="books-gallery container py-5">
+          <div className="gallery-header text-center mb-4">
+            <h2 className="section-title fw-bold">Galería de Libros</h2>
+            <p className="section-subtitle text-secondary">Explora nuestra colección completa</p>
           </div>
 
-          <div className="gallery-filters">
+          <div className="gallery-filters d-flex justify-content-center mb-4 flex-wrap gap-2">
             {categories.map(cat => (
               <button
                 key={cat}
-                className={`filter-btn ${selectedCategory === cat ? 'active' : ''}`}
+                className={`btn btn-outline-primary ${selectedCategory === cat ? 'active' : ''}`}
                 onClick={() => setSelectedCategory(cat)}
               >
                 {cat}
@@ -69,28 +69,20 @@ function Libros() {
             ))}
           </div>
 
-          <div className="gallery-container">
+          <div className="row g-4 justify-content-center">
             {filteredBooks.map((book, index) => (
-              <div className="gallery-book-card" key={index}>
-                <img className="book-cover" src={book.image} alt={book.title} />
-                <div className="book-details">
-                  <h3>{book.title}</h3>
-                  <p className="author">{book.author}</p>
-                  <div className="book-meta">
-                    <span className="category">{book.category}</span>
-                    <span className="rating"><i className="fas fa-star"></i> {book.rating}</span>
-                  </div>
-                </div>
+              <div className="col-12 col-sm-6 col-lg-4" key={index}>
+                <BookCard book={book} />
               </div>
             ))}
           </div>
 
-          <div className="pagination">
-            <button className="btn pagination-btn disabled"><i className="fas fa-chevron-left"></i></button>
-            <button className="btn pagination-btn active">1</button>
-            <button className="btn pagination-btn">2</button>
-            <button className="btn pagination-btn">3</button>
-            <button className="btn pagination-btn"><i className="fas fa-chevron-right"></i></button>
+          <div className="pagination d-flex justify-content-center mt-4 gap-2">
+            <button className="btn btn-outline-primary disabled"><i className="fas fa-chevron-left"></i></button>
+            <button className="btn btn-primary active">1</button>
+            <button className="btn btn-outline-primary">2</button>
+            <button className="btn btn-outline-primary">3</button>
+            <button className="btn btn-outline-primary"><i className="fas fa-chevron-right"></i></button>
           </div>
         </section>
       </main>

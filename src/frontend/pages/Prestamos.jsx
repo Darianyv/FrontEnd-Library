@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../../assets/styles/prestamos.css';
 import Footer from '../components/Footer';
 import HeaderFront from '../components/HeaderFront';
 
@@ -11,7 +10,6 @@ function Prestamos() {
 
   const calcularFechaDevolucion = () => {
     if (!fechaPrestamo || !dias) return;
-
     const fecha = new Date(fechaPrestamo);
     fecha.setDate(fecha.getDate() + parseInt(dias));
     setFechaDevolucion(fecha.toISOString().split('T')[0]);
@@ -25,65 +23,81 @@ function Prestamos() {
 
   return (
     <div className="app-container">
-
       <HeaderFront />
 
-      {/* Main Content */}
-      <main className="main-content">
-        <section className="prestamo-section">
-          <h2>Formulario de Préstamo</h2>
-          <form className="prestamo-form" onSubmit={guardarDatos}>
-            <table className="form-table">
-              <tbody>
-                <tr>
-                  <th>Nombre del lector</th>
-                  <td><input type="text" name="nombre" required /></td>
-                </tr>
-                <tr>
-                  <th>Título del libro</th>
-                  <td><input type="text" name="libro" required /></td>
-                </tr>
-                <tr>
-                  <th>Fecha de préstamo</th>
-                  <td>
-                    <input
-                      type="date"
-                      value={fechaPrestamo}
-                      onChange={(e) => setFechaPrestamo(e.target.value)}
-                      required
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <th>Días de préstamo</th>
-                  <td>
-                    <input
-                      type="number"
-                      min="1"
-                      value={dias}
-                      onChange={(e) => setDias(e.target.value)}
-                      required
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
-            <div className="btn-group">
-              <button type="button" className="btn calcular-btn" onClick={calcularFechaDevolucion}>
-                Calcular devolución
-              </button>
-              <button type="submit" className="btn guardar-btn">Guardar datos</button>
-              <button type="button" className="btn reservar-btn">Reservar libro</button>
-              <button type="button" className="btn cambiar-btn">Cambiar libro</button>
+       {/* Main Content */}
+      <main className="main-content min-vh-100 py-5">
+        <section className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-7 col-md-9">
+              <div className="card shadow-lg border-0">
+                <div className="card-body bg-white text-primary rounded">
+                  <h2 className="fw-bold mb-4 text-center">
+                    <i className="fas fa-handshake me-2"></i>Formulario de Préstamo
+                  </h2>
+                  <form onSubmit={guardarDatos}>
+                    <div className="mb-3">
+                      <label className="form-label fw-semibold">
+                        <i className="fas fa-user me-2"></i>Nombre del lector
+                      </label>
+                      <input type="text" name="nombre" className="form-control" required />
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label fw-semibold">
+                        <i className="fas fa-book me-2"></i>Título del libro
+                      </label>
+                      <input type="text" name="libro" className="form-control" required />
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label fw-semibold">
+                        <i className="fas fa-calendar-alt me-2"></i>Fecha de préstamo
+                      </label>
+                      <input
+                        type="date"
+                        value={fechaPrestamo}
+                        onChange={(e) => setFechaPrestamo(e.target.value)}
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <label className="form-label fw-semibold">
+                        <i className="fas fa-clock me-2"></i>Días de préstamo
+                      </label>
+                      <input
+                        type="number"
+                        min="1"
+                        value={dias}
+                        onChange={(e) => setDias(e.target.value)}
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                    <div className="d-flex flex-wrap gap-2 justify-content-center mb-3">
+                      <button type="button" className="btn btn-primary text-white" onClick={calcularFechaDevolucion}>
+                        <i className="fas fa-calendar-check me-1"></i> Calcular devolución
+                      </button>
+                      <button type="submit" className="btn btn-outline-primary text-primary">
+                        <i className="fas fa-save me-1"></i> Guardar datos
+                      </button>
+                      <button type="button" className="btn btn-outline-primary text-primary">
+                        <i className="fas fa-calendar-plus me-1"></i> Reservar libro
+                      </button>
+                      <button type="button" className="btn btn-outline-primary text-primary">
+                        <i className="fas fa-exchange-alt me-1"></i> Cambiar libro
+                      </button>
+                    </div>
+                    {fechaDevolucion && (
+                      <div className="alert alert-primary text-center fw-semibold mt-3 mb-0" role="alert">
+                        <i className="fas fa-calendar-day me-2"></i>
+                        Fecha estimada de devolución: <strong>{fechaDevolucion}</strong>
+                      </div>
+                    )}
+                  </form>
+                </div>
+              </div>
             </div>
-
-            {fechaDevolucion && (
-              <p className="resultado-fecha">
-                Fecha estimada de devolución: <strong>{fechaDevolucion}</strong>
-              </p>
-            )}
-          </form>
+          </div>
         </section>
       </main>
       <Footer />

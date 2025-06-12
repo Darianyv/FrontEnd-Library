@@ -40,8 +40,7 @@ function Categoria() {
   return (
     <div className="app-container">
 
-      <HeaderFront />   
-
+      <HeaderFront />  
       <main className="main-content">
         <section className="categories">
           <h2>Explora por Categorías</h2>

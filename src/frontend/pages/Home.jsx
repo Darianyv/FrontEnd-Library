@@ -53,36 +53,47 @@ function Home() {
     <div className="app-container">
 
       <HeaderFront />
-
-      {/* Main Content */}
+     {/* Main Content */}
       <main className="main-content">
         {/* Hero Section */}
-        <section className="hero">
-          <div className="hero-content">
-            <h2>Explora nuestro catálogo de libros</h2>
-            <p>Encuentra tu próxima lectura favorita entre miles de títulos disponibles</p>
-            <div className="search-bar">
-              <input type="text" placeholder="Buscar libros..." />
-              <button className="btn search-btn">
+        <section className="hero py-5">
+          <div className="hero-content text-center">
+            <h2 className="fw-bold mb-3">Explora nuestro catálogo de libros</h2>
+            <p className="mb-4">Encuentra tu próxima lectura favorita entre miles de títulos disponibles</p>
+            <div className="search-bar d-flex justify-content-center mb-3">
+              <input
+                type="text"
+                className="form-control w-auto me-2"
+                placeholder="Buscar libros..."
+                style={{ maxWidth: 300 }}
+              />
+              <button className="btn btn-light text-primary search-btn">
                 <i className="fas fa-search"></i> Buscar
               </button>
             </div>
-            <Link to="/prestamos" className="btn reserve-btn">
+            <Link to="/prestamos" className="btn btn-outline-primary reserve-btn">
               <i className="fas fa-calendar-plus"></i> Reservar tu libro
             </Link>
           </div>
         </section>
         
-        <CarruselLibros libros={libros} />
+        <div className="bg-white py-4">
+          <CarruselLibros libros={libros} />
+        </div>
 
         {/* Categorías */}
-        <section className="categories">
-          <h2>Explora por categorías</h2>
-          <div className="categories-grid">
+        <section className="categories py-5">
+          <h2 className="fw-bold text-center mb-4">Explora por categorías</h2>
+          <div className="categories-grid d-flex flex-wrap justify-content-center gap-4">
             {categorias.map((cat, index) => (
-              <Link to={`/libros?categoria=${encodeURIComponent(cat.nombre)}`} key={index} className="category-card">
-                <i className={cat.icono}></i>
-                <h3>{cat.nombre}</h3>
+              <Link
+                to={`/libros?categoria=${encodeURIComponent(cat.nombre)}`}
+                key={index}
+                className="category-card d-flex flex-column align-items-center justify-content-center bg-light text-primary rounded shadow-sm p-4"
+                style={{ width: 160, minHeight: 140, textDecoration: 'none' }}
+              >
+                <i className={`${cat.icono} fa-2x mb-2`}></i>
+                <h3 className="fs-5 fw-semibold mb-0">{cat.nombre}</h3>
               </Link>
             ))}
           </div>
