@@ -7,7 +7,11 @@ import Prestamos from './pages/Prestamos';
 import CategoriaPage from './pages/CategoriaPage';
 import CategoriaDetalle from './components/CategoriaDetalle';
 import Login from './pages/Login';
-import Registro from './pages/Registro';
+import Registro from './pages/Registro';import Footer from './admin/components/Footer';
+import Aside from './admin/components/Aside';
+import Content from './admin/components/Content';
+import Header from './admin/components/Header';
+
 
 
 function App() {
@@ -22,7 +26,10 @@ function App() {
       <Route path="/prestamos" element={<Prestamos />} />
       <Route path="/CategoriaPage" element={<CategoriaPage />} />
       <Route path="/CategoriaDetalle" element={<CategoriaDetalle />} />
-    
+        <Header/>
+        <Aside />
+        <Content />
+        <Footer />
 
     </Routes>
   );
