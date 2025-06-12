@@ -13,6 +13,7 @@ import Aside from './admin/components/Aside';
 import Content from './admin/components/Content';
 import Header from './admin/components/Header';
 import ProtectedRoute from './frontend/components/ProtectedRoute';
+import './assets/styles/styles.css';
 
 
 
