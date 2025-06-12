@@ -1,69 +1,38 @@
+import { Link } from 'react-router-dom';
+import '../../assets/styles/aside.css'; // Import your custom styles
 
 export default function Aside() {
   return (
-    <>
-   {/* Sidebar */}
-<ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-  {/* Sidebar - Brand */}
-  <a className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-    <div className="sidebar-brand-icon rotate-n-15">
-      <i className="fas fa-laugh-wink"></i>
-    </div>
-    <div className="sidebar-brand-text mx-3">Inventario</div>
-  </a>
-
-  {/* Divider */}
-  <hr className="sidebar-divider my-0" />
-
-  {/* Nav Item - Dashboard */}
-  <li className="nav-item active">
-    <a className="nav-link" href="index.html">
-      <i className="fas fa-fw fa-tachometer-alt"></i>
-      <span>Dashboard</span>
-    </a>
-  </li>
-
-  {/* Divider */}
-  <hr className="sidebar-divider" />
-
-  {/* Heading */}
-  <div className="sidebar-heading">
-    Modulos
-  </div>
-
-  {/* Nav Item - Pages Collapse Menu */}
-  <li className="nav-item">
-    <a
-      className="nav-link collapsed"
-      href="#"
-      data-toggle="collapse"
-      data-target="#collapseTwo"
-      aria-expanded="true"
-      aria-controls="collapseTwo"
-    >
-      <i className="fas fa-fw fa-cog"></i>
-      <span>Productos</span>
-    </a>
-    <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-      <div className="bg-white py-2 collapse-inner rounded">
-        <h6 className="collapse-header">Acciones:</h6>
-        <a className="collapse-item" href="listado-pro.html">Ver Productos</a>
-        <a className="collapse-item" href="crear-pro.html">Crear Productos</a>
+    <aside className="custom-sidebar">
+      <div className="sidebar-brand">
+        <i className="fas fa-laugh-wink"></i>
+        <span>Panel Administrador</span>
       </div>
-    </div>
-  </li>
-
-  {/* Divider */}
-  <hr className="sidebar-divider" />
-
-  {/* Sidebar Toggler */}
-  <div className="text-center d-none d-md-inline">
-    <button className="rounded-circle border-0" id="sidebarToggle"></button>
-  </div>
-</ul>
-
-      
-    </>
-  )
+      <nav>
+        <ul>
+          <li>
+            <Link to="/admin">
+              <i className="fas fa-tachometer-alt"></i> Dashboard
+            </Link>
+          </li>
+          <li>
+            <span className="sidebar-heading">Módulos</span>
+          </li>
+          <li>
+            <Link to="/admin/productos">
+              <i className="fas fa-cog"></i> Productos
+            </Link>
+            <ul className="submenu">
+              <li>
+                <Link to="/admin/productos/listado">Ver Productos</Link>
+              </li>
+              <li>
+                <Link to="/admin/productos/crear">Crear Productos</Link>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  );
 }

@@ -17,8 +17,8 @@ const HeaderFront = () => (
             </ul>
         </nav>
         <div className="user-actions">
-            <button className="btn login">Iniciar sesión</button>
-            <button className="btn register">Registrarse</button>
+            <Link to="/login" className="btn login">Iniciar sesión</Link>
+            <Link to="/registro" className="btn register">Registrarse</Link>
         </div>
     </header>
 );

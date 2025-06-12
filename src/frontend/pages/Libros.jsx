@@ -49,7 +49,6 @@ function Libros() {
     <div className="app-container">
 
       <HeaderFront />
-      
 
       <main className="main-content">
         <section className="books-gallery">

@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import '../../assets/styles/home.css';
-import AuthButtons from './AuthButtons';
 import Footer from '../components/Footer';
+import HeaderFront from '../components/HeaderFront';
+import CarruselLibros from '../components/CarruselLibros';
+
 
 function Home() {
   const libros = [
@@ -49,23 +51,8 @@ function Home() {
 
   return (
     <div className="app-container">
-      {/* Header */}
-      <header className="header">
-        <div className="logo">
-          <i className="fas fa-book-open"></i>
-          <h1>Sombras & Letras</h1>
-        </div>
-        <nav className="nav">
-          <ul>
-            <li><Link to="/">Inicio</Link></li>
-            <li><Link to="/libros">Libros</Link></li>
-            <li><Link to="/autores">Autores</Link></li>
-            <li><Link to="/categoria">Categorías</Link></li>
-            <li><Link to="/prestamos">Préstamos</Link></li>
-          </ul>
-        </nav>
-        <AuthButtons />
-      </header>
+
+      <HeaderFront />
 
       {/* Main Content */}
       <main className="main-content">
@@ -85,31 +72,8 @@ function Home() {
             </Link>
           </div>
         </section>
-
-        {/* Featured Books Carousel */}
-        <section className="featured-books">
-          <h2>Libros destacados</h2>
-          <Swiper spaceBetween={20} slidesPerView={1} breakpoints={{ 640: { slidesPerView: 1 }, 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }}>
-            {libros.map((libro, index) => (
-              <SwiperSlide key={index}>
-                <div className="book-card">
-                  <div className="book-cover">
-                    <img src={libro.img} alt={libro.titulo} />
-                  </div>
-                  <div className="book-info">
-                    <h3>{libro.titulo}</h3>
-                    <p className="author">{libro.autor}</p>
-                    <div className="book-meta">
-                      <span className="category">{libro.categoria}</span>
-                      <span className="year">{libro.anio}</span>
-                    </div>
-                    <Link to="/prestamos" className="btn details-btn">Reservar</Link>
-                  </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </section>
+        
+        <CarruselLibros libros={libros} />
 
         {/* Categorías */}
         <section className="categories">
