@@ -1,5 +1,15 @@
 import { Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './frontend/components/ProtectedRoute';
+import Aside from './frontend/components/Aside';
+import Header from './frontend/components/Header';
+import Content from './frontend/components/Content';
+import ClienteDashboard from './frontend/components/ClienteDashboard';
+// Importa aquí otros componentes y páginas según tu estructura
 
+function App() {
+  return (
+    <>
+      <Routes>
         {/* Ruta protegida para admin */}
         <Route
           path="/admin"
@@ -24,6 +34,10 @@ import { Routes, Route } from 'react-router-dom';
             </ProtectedRoute>
           }
         />
+        {/* Agrega aquí tus rutas públicas, por ejemplo: */}
+        {/* <Route path="/" element={<Home />} /> */}
+        {/* <Route path="/login" element={<Login />} /> */}
+        {/* <Route path="/registro" element={<Registro />} /> */}
       </Routes>
     </>
   );
