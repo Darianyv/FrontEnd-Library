@@ -16,35 +16,35 @@ const autores = [
     nacionalidad: "Argentino",
     genero: "Ficción literaria",
     obra: "El Aleph",
-    img: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Jorge_Luis_Borges_1951.jpg"
+    img: "https://th.bing.com/th/id/OIP.0meSzd6CiMppgCYwb800dwAAAA?rs=1&pid=ImgDetMain"
   },
   {
     nombre: "Jane Austen",
     nacionalidad: "Británica",
     genero: "Novela romántica",
     obra: "Orgullo y prejuicio",
-    img: "https://upload.wikimedia.org/wikipedia/commons/9/9b/Jane_Austen_coloured_version.jpg"
+    img: "https://th.bing.com/th/id/OIP.yia_91SV_f10mjjYPD6FjgHaEm?rs=1&pid=ImgDetMain"
   },
   {
     nombre: "Miguel de Cervantes",
     nacionalidad: "Español",
     genero: "Literatura clásica",
     obra: "Don Quijote",
-    img: "https://upload.wikimedia.org/wikipedia/commons/7/76/Miguel_de_Cervantes_%281605%29_by_Juan_de_J%C3%A1uregui.jpg"
+    img: "https://www.biografiasyvidas.com/monografia/cervantes/fotos/cervantes_miguel_1.jpg"
   },
   {
     nombre: "Pablo Neruda",
     nacionalidad: "Chileno",
     genero: "Poesía",
     obra: "Veinte poemas de amor",
-    img: "https://upload.wikimedia.org/wikipedia/commons/8/82/Pablo_Neruda_1963.jpg"
+    img: "https://poemanalysis.com/wp-content/uploads/2021/01/Pablo-Neruda-Portrait.jpg"
   },
   {
     nombre: "J.K. Rowling",
     nacionalidad: "Británica",
     genero: "Fantasía",
     obra: "Harry Potter",
-    img: "https://upload.wikimedia.org/wikipedia/commons/9/98/J._K._Rowling_2010.jpg"
+    img: "https://th.bing.com/th/id/R.3d003398277860f6eec85aa831fec26b?rik=B40cKoLhavzHAw&pid=ImgRaw&r=0"
   }
 ];
 
