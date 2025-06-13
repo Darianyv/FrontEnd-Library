@@ -5,40 +5,39 @@ import 'swiper/css';
 import '../../assets/styles/home.css';
 import Footer from '../components/Footer';
 import HeaderFront from '../components/HeaderFront';
-import CarruselLibros from '../components/CarruselLibros';
-
+import BookCard from '../components/BookCard';
 
 function Home() {
   const libros = [
-    {
-      titulo: "Cien años de soledad",
-      autor: "Gabriel García Márquez",
-      categoria: "Novela",
-      anio: 1967,
-      img: "https://www.alianzalibros.com/wp-content/uploads/2024/11/cien-anos-de-soledad.webp"
-    },
-    {
-      titulo: "El Principito",
-      autor: "Antoine de Saint-Exupéry",
-      categoria: "Fábula",
-      anio: 1943,
-      img: "https://m.media-amazon.com/images/I/71X1p4TGlxL._AC_UF1000,1000_QL80_.jpg"
-    },
-    {
-      titulo: "1984",
-      autor: "George Orwell",
-      categoria: "Ciencia Ficción",
-      anio: 1949,
-      img: "https://m.media-amazon.com/images/I/81dQwQlmAXL._AC_UF1000,1000_QL80_.jpg"
-    },
-    {
-      titulo: "Don Quijote de la Mancha",
-      autor: "Miguel de Cervantes",
-      categoria: "Clásico",
-      anio: 1605,
-      img: "https://m.media-amazon.com/images/I/91SZSW8qSsL._AC_UF1000,1000_QL80_.jpg"
-    }
-  ];
+  {
+    titulo: "Cien años de soledad",
+    autor: "Gabriel García Márquez",
+    categoria: "Novela",
+    popularidad: 4.8,
+    img: "https://www.alianzalibros.com/wp-content/uploads/2024/11/cien-anos-de-soledad.webp"
+  },
+  {
+    titulo: "El Principito",
+    autor: "Antoine de Saint-Exupéry",
+    categoria: "Fábula",
+    popularidad: 4.9,
+    img: "https://m.media-amazon.com/images/I/71X1p4TGlxL._AC_UF1000,1000_QL80_.jpg"
+  },
+  {
+    titulo: "1984",
+    autor: "George Orwell",
+    categoria: "Ciencia Ficción",
+    popularidad: 4.7,
+    img: "https://m.media-amazon.com/images/I/81dQwQlmAXL._AC_UF1000,1000_QL80_.jpg"
+  },
+  {
+    titulo: "Don Quijote de la Mancha",
+    autor: "Miguel de Cervantes",
+    categoria: "Clásico",
+    popularidad: 4.6,
+    img: "https://m.media-amazon.com/images/I/91SZSW8qSsL._AC_UF1000,1000_QL80_.jpg"
+  }
+];
 
   const categorias = [
     { nombre: "Literatura", icono: "fas fa-book" },
@@ -77,9 +76,17 @@ function Home() {
           </div>
         </section>
         
-        <div className="bg-white py-4">
-          <CarruselLibros libros={libros} />
-        </div>
+        {/* Libros destacados */}
+        <section className="featured-books py-5">
+          <h2 className="fw-bold text-center mb-4">Libros destacados</h2>
+          <div className="row justify-content-center g-4">
+            {libros.map((libro, idx) => (
+              <div className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex" key={idx}>
+                <BookCard libro={libro} />
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* Categorías */}
         <section className="categories py-5">

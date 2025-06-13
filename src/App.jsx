@@ -4,8 +4,6 @@ import Autores from './frontend/pages/Autores';
 import Categoria from './frontend/pages/Categoria';
 import Libros from './frontend/pages/Libros';
 import Prestamos from './frontend/pages/Prestamos';
-import CategoriaPage from './frontend/pages/CategoriaPage';
-import CategoriaDetalle from './frontend/components/CategoriaDetalle';
 import Login from './frontend/pages/Login';
 import Registro from './frontend/pages/Registro';
 import Aside from './admin/components/Aside';
@@ -13,6 +11,7 @@ import Content from './admin/components/Content';
 import Header from './admin/components/Header';
 import ProtectedRoute from './frontend/components/ProtectedRoute';
 import './assets/styles/styles.css';
+import ClienteDashboard from './frontend/components/ClienteDashboard';
 
 function App() {
   return (
@@ -25,8 +24,6 @@ function App() {
         <Route path="/categoria" element={<Categoria />} />
         <Route path="/libros" element={<Libros />} />
         <Route path="/prestamos" element={<Prestamos />} />
-        <Route path="/CategoriaPage" element={<CategoriaPage />} />
-        <Route path="/CategoriaDetalle" element={<CategoriaDetalle />} />
 
         {/* Ruta protegida para admin */}
         <Route
@@ -40,6 +37,15 @@ function App() {
                   <Content />
                 </div>
               </div>
+            </ProtectedRoute>
+          }
+        />
+        {/* Ruta protegida para cliente */}
+        <Route
+          path="/cliente"
+          element={
+            <ProtectedRoute role="cliente">
+              <ClienteDashboard userName="Nombre del Cliente" />
             </ProtectedRoute>
           }
         />

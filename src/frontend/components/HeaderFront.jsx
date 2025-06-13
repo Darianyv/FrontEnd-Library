@@ -12,29 +12,29 @@ const HeaderFront = () => (
                 <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul className="navbar-nav mx-auto mb-2 mb-lg-0 justify-content-center">
                     <li className="nav-item">
-                        <Link to="/" className="nav-link">
+                        <Link to="/" className="nav-link text-white fw-bold">
                             <i className="fas fa-home me-1"></i> Inicio
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/libros" className="nav-link">
+                        <Link to="/libros" className="nav-link text-white fw-bold">
                             <i className="fas fa-book me-1"></i> Libros
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/autores" className="nav-link">
+                        <Link to="/autores" className="nav-link text-white fw-bold">
                             <i className="fas fa-user-edit me-1"></i> Autores
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/categoria" className="nav-link">
+                        <Link to="/categoria" className="nav-link text-white fw-bold">
                             <i className="fas fa-tags me-1"></i> Categorías
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/prestamos" className="nav-link">
+                        <Link to="/prestamos" className="nav-link text-white fw-bold">
                             <i className="fas fa-handshake me-1"></i> Préstamos
                         </Link>
                     </li>

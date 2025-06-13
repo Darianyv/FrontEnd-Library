@@ -18,17 +18,46 @@ export default function Registro() {
   };
 
   return (
-    <div className="auth-container">
-      <h2>Registro</h2>
-      <form onSubmit={handleSubmit}>
-        <input name="username" placeholder="Usuario" onChange={handleChange} required />
-        <input type="password" name="password" placeholder="Contraseña" onChange={handleChange} required />
-        <select name="role" onChange={handleChange}>
-          <option value="cliente">Cliente</option>
-          <option value="admin">Administrador</option>
-        </select>
-        <button type="submit">Registrarse</button>
-      </form>
+    <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+      <div className="card shadow p-4" style={{ maxWidth: 400, width: '100%' }}>
+        <h2 className="text-center mb-4 fw-bold text-primary">Registro</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <input
+              name="username"
+              className="form-control"
+              placeholder="Usuario"
+              onChange={handleChange}
+              required
+              autoFocus
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="password"
+              name="password"
+              className="form-control"
+              placeholder="Contraseña"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <select
+              name="role"
+              className="form-select"
+              onChange={handleChange}
+              value={form.role}
+            >
+              <option value="cliente">Cliente</option>
+              <option value="admin">Administrador</option>
+            </select>
+          </div>
+          <button type="submit" className="btn btn-primary w-100 fw-bold">
+            <i className="fas fa-user-plus me-2"></i>Registrarse
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

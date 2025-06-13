@@ -72,7 +72,15 @@ function Libros() {
           <div className="row g-4 justify-content-center">
             {filteredBooks.map((book, index) => (
               <div className="col-12 col-sm-6 col-lg-4" key={index}>
-                <BookCard book={book} />
+                <BookCard
+                  libro={{
+                    titulo: book.title,
+                    autor: book.author,
+                    categoria: book.category,
+                    anio: book.rating, // Si tienes año, cámbialo aquí
+                    img: book.image
+                  }}
+                />
               </div>
             ))}
           </div>
