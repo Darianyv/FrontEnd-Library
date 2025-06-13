@@ -5,35 +5,50 @@ import HeaderFront from '../components/HeaderFront';
 
 const categorias = [
   {
-    icono: 'fas fa-book',
-    nombre: 'Literatura',
-    ruta: '/libros?categoria=literatura',
+    icono: 'fas fa-magic',
+    nombre: 'Realismo mágico',
+    ruta: '/libros?categoria=realismo mágico',
   },
   {
-    icono: 'fas fa-flask',
-    nombre: 'Ciencia',
-    ruta: '/libros?categoria=ciencia',
+    icono: 'fas fa-heart',
+    nombre: 'Romántico',
+    ruta: '/libros?categoria=romántico',
   },
   {
-    icono: 'fas fa-laptop-code',
-    nombre: 'Tecnología',
-    ruta: '/libros?categoria=tecnologia',
+    icono: 'fas fa-robot',
+    nombre: 'Ciencia Ficción',
+    ruta: '/libros?categoria=ciencia ficción',
   },
   {
-    icono: 'fas fa-brain',
-    nombre: 'Psicología',
-    ruta: '/libros?categoria=psicologia',
+    icono: 'fas fa-hat-wizard',
+    nombre: 'Fantasía',
+    ruta: '/libros?categoria=fantasía',
   },
   {
-    icono: 'fas fa-chart-line',
-    nombre: 'Negocios',
-    ruta: '/libros?categoria=negocios',
+    icono: 'fas fa-feather-alt',
+    nombre: 'Fábula',
+    ruta: '/libros?categoria=fábula',
   },
   {
-    icono: 'fas fa-history',
-    nombre: 'Historia',
-    ruta: '/libros?categoria=historia',
+    icono: 'fas fa-search',
+    nombre: 'Misterio',
+    ruta: '/libros?categoria=misterio',
   },
+  {
+    icono: 'fas fa-scroll',
+    nombre: 'Clásico',
+    ruta: '/libros?categoria=clásico',
+  },
+  {
+    icono: 'fas fa-skull',
+    nombre: 'Terror',
+    ruta: '/libros?categoria=terror',
+  },
+  {
+    icono: 'fas fa-landmark',
+    nombre: 'Épico',
+    ruta: '/libros?categoria=épico',
+  }
 ];
 
 function Categoria() {

@@ -1,50 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../../assets/styles/libros.css';
 import Footer from '../components/Footer';
 import HeaderFront from '../components/HeaderFront';
 import BookCard from '../components/BookCard';
 
-const booksData = [
-  {
-    title: 'Cien años de soledad',
-    author: 'Gabriel García Márquez',
-    category: 'Novela',
-    rating: 4.8,
-    image: 'https://www.alianzalibros.com/wp-content/uploads/2024/11/cien-anos-de-soledad.webp'
-  },
-  {
-    title: '1984',
-    author: 'George Orwell',
-    category: 'Ciencia Ficción',
-    rating: 4.7,
-    image: 'https://m.media-amazon.com/images/I/81dQwQlmAXL._AC_UF1000,1000_QL80_.jpg'
-  },
-  {
-    title: 'El Principito',
-    author: 'Antoine de Saint-Exupéry',
-    category: 'Fábula',
-    rating: 4.9,
-    image: 'https://m.media-amazon.com/images/I/71X1p4TGlxL._AC_UF1000,1000_QL80_.jpg'
-  },
-  {
-    title: 'Don Quijote',
-    author: 'Miguel de Cervantes',
-    category: 'Clásico',
-    rating: 4.6,
-    image: 'https://m.media-amazon.com/images/I/91SZSW8qSsL._AC_UF1000,1000_QL80_.jpg'
-  }
-];
-
 const categories = ['Todos', 'Novela', 'Ciencia Ficción', 'Clásico', 'Fábula', 'Fantasía'];
 
 function Libros() {
+  const [books, setBooks] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('Todos');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Cambia la URL por la de tu API real
+    fetch('http://localhost:8080/libros')
+      .then(res => {
+        if (!res.ok) throw new Error('Error al cargar los libros');
+        return res.json();
+      })
+      .then(data => {
+        setBooks(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
 
   const filteredBooks =
     selectedCategory === 'Todos'
-      ? booksData
-      : booksData.filter(book => book.category === selectedCategory);
+      ? books
+      : books.filter(book => book.category === selectedCategory);
 
   return (
     <div className="app-container">
@@ -69,28 +58,23 @@ function Libros() {
             ))}
           </div>
 
+          {loading && <p>Cargando libros...</p>}
+          {error && <p className="text-danger">{error}</p>}
+
           <div className="row g-4 justify-content-center">
             {filteredBooks.map((book, index) => (
               <div className="col-12 col-sm-6 col-lg-4" key={index}>
                 <BookCard
                   libro={{
-                    titulo: book.title,
-                    autor: book.author,
-                    categoria: book.category,
-                    anio: book.rating, // Si tienes año, cámbialo aquí
-                    img: book.image
+                    titulo: book.nombre,
+                    autor: book.autor?.nombre,            
+                    categoria: book.categoria?.nombre,     
+                    img: book.imagenUrl,                  
+                    popularidad: book.popularidad
                   }}
                 />
               </div>
             ))}
-          </div>
-
-          <div className="pagination d-flex justify-content-center mt-4 gap-2">
-            <button className="btn btn-outline-primary disabled"><i className="fas fa-chevron-left"></i></button>
-            <button className="btn btn-primary active">1</button>
-            <button className="btn btn-outline-primary">2</button>
-            <button className="btn btn-outline-primary">3</button>
-            <button className="btn btn-outline-primary"><i className="fas fa-chevron-right"></i></button>
           </div>
         </section>
       </main>
