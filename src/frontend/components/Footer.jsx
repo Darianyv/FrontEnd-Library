@@ -11,7 +11,7 @@ export default function Footer() {
               <i className="fas fa-info-circle me-2"></i>Sobre nosotros
             </h5>
             <p className="mb-0">
-              Biblioteca Digital es un proyecto dedicado a promover la lectura y el acceso al conocimiento.
+              Sombras y letras es un proyecto dedicado a promover la lectura y el acceso al conocimiento.
             </p>
           </div>
           {/* Contacto */}
