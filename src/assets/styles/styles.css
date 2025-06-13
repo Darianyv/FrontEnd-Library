@@ -47,10 +47,6 @@ body {
   border-bottom: 2px solid #3498db;
 }
 
-.user-actions .btn {
-  margin-left: 0.5rem;
-}
-
 /* Hero */
 .hero {
   background: url(https://www.doxdirect.es/wp-content/uploads/colores-1024x683.jpeg) no-repeat center center/cover;
@@ -258,4 +254,3 @@ body {
   background-color: #fff;
   color: #333;
 }
-
