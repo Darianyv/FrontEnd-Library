@@ -80,3 +80,20 @@ body {
         width: 100%;
     }
 }
+
+.category-home-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.category-home-card:hover {
+  transform: translateY(-8px) scale(1.04);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  background: #f8fafc;
+}
+.category-home-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.category-home-card:hover {
+  transform: translateY(-8px) scale(1.04);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  background: #f8fafc;
+}

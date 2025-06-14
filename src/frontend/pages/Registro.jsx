@@ -1,6 +1,33 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../assets/styles/auth.css';
+import { API_BASE_URL } from '../../config';  
+
+
+
+const handleSubmit = async e => {
+  e.preventDefault();
+
+  try {
+    const response = await fetch(`http://localhost:8080/api/usuarios/registro`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    });
+
+    if (!response.ok) {
+      const msg = await response.text();
+      alert(`Error: ${msg}`);
+      return;
+    }
+
+    alert('Registro exitoso');
+    navigate('/login');
+  } catch (error) {
+    alert('Error en el registro');
+    console.error(error);
+  }
+};
 
 export default function Registro() {
   const [form, setForm] = useState({ username: '', password: '', role: 'cliente' });

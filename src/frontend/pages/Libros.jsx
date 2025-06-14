@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import '../../assets/styles/libros.css';
 import Footer from '../components/Footer';
 import HeaderFront from '../components/HeaderFront';
@@ -16,11 +17,18 @@ const categorias = [
   { icono: 'fas fa-landmark', nombre: 'Épico', ruta: '/libros?categoria=épico' }
 ];
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 function Libros() {
   const [books, setBooks] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const query = useQuery();
+  const search = query.get('search') || '';
 
   useEffect(() => {
     fetch('http://localhost:8080/libros')
@@ -38,10 +46,15 @@ function Libros() {
       });
   }, []);
 
-  const filteredBooks =
-    selectedCategory === 'Todos'
-      ? books
-      : books.filter(book => book.categoria?.nombre === selectedCategory);
+  // Filtrado por categoría y por búsqueda
+  const filteredBooks = books.filter(book => {
+    const matchesCategory =
+      selectedCategory === 'Todos' || book.categoria?.nombre === selectedCategory;
+    const matchesSearch =
+      !search ||
+      book.titulo.toLowerCase().includes(search.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div className="app-container">
@@ -77,6 +90,9 @@ function Libros() {
           {error && <p className="text-danger">{error}</p>}
 
           <div className="row g-4 justify-content-center">
+            {filteredBooks.length === 0 && !loading && (
+              <p className="text-center">No se encontraron libros.</p>
+            )}
             {filteredBooks.map((book) => (
               <div className="col-12 col-sm-6 col-lg-4" key={book.id}>
                 <BookCard libro={book} />

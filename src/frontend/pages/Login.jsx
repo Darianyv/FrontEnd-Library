@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../assets/styles/auth.css';
+import { API_BASE_URL } from '../../config';
 
 export default function Login() {
   const [form, setForm] = useState({ username: '', password: '' });
@@ -8,17 +9,29 @@ export default function Login() {
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    const user = users.find(u => u.username === form.username && u.password === form.password);
 
-    if (user) {
+    try {
+      const response = await fetch(`http://localhost:8080/api/usuarios/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      if (!response.ok) {
+        const msg = await response.text();
+        alert(`Error: ${msg}`);
+        return;
+      }
+
+      const user = await response.json();
       localStorage.setItem('currentUser', JSON.stringify(user));
       alert('Inicio de sesión exitoso');
-      navigate(user.role === 'admin' ? '/admin' : '/');
-    } else {
-      alert('Usuario o contraseña incorrectos');
+      navigate(user.role === 'admin' ? '/admin' : '/cliente');
+    } catch (error) {
+      alert('Error al iniciar sesión');
+      console.error(error);
     }
   };
 
