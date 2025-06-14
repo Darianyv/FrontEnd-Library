@@ -14,34 +14,83 @@ export default function AdmonLibros() {
   const [imagenUrl, setImagenUrl] = useState('');
   const [editando, setEditando] = useState(null);
 
-  useEffect(() => {
-    cargarLibros();
-    fetch('http://localhost:8080/api/autores')
-      .then(res => res.json())
-      .then(data => setAutores(data))
-      .catch(() => setError('Error al cargar autores'));
+  // Configuración común para las peticiones fetch
+  const fetchConfig = {
+    baseUrl: 'http://localhost:8080',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    }
+  };
 
-    fetch('http://localhost:8080/api/categorias')
-      .then(res => res.json())
-      .then(data => setCategorias(data))
-      .catch(() => setError('Error al cargar categorías'));
+  useEffect(() => {
+    const cargarDatosIniciales = async () => {
+      try {
+        setLoading(true);
+        await Promise.all([
+          cargarLibros(),
+          cargarAutores(),
+          cargarCategorias()
+        ]);
+      } catch (error) {
+        setError('Error al cargar datos iniciales');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    cargarDatosIniciales();
   }, []);
 
-  const cargarLibros = () => {
-    setLoading(true);
-    fetch('http://localhost:8080/libros')
-      .then(res => {
-        if (!res.ok) throw new Error('Error al cargar los libros');
-        return res.json();
-      })
-      .then(data => {
-        setBooks(Array.isArray(data) ? data : []);
-        setLoading(false);
-      })
-      .catch(err => {
-        setError(err.message);
-        setLoading(false);
+  const cargarLibros = async () => {
+    try {
+      const response = await fetch(`${fetchConfig.baseUrl}/libros`, {
+        headers: fetchConfig.headers
       });
+      
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      setBooks(Array.isArray(data) ? data : []);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const cargarAutores = async () => {
+    try {
+      const response = await fetch(`${fetchConfig.baseUrl}/api/autores`, {
+        headers: fetchConfig.headers
+      });
+      
+      if (!response.ok) {
+        throw new Error('Error al cargar autores');
+      }
+      
+      const data = await response.json();
+      setAutores(data);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const cargarCategorias = async () => {
+    try {
+      const response = await fetch(`${fetchConfig.baseUrl}/api/categorias`, {
+        headers: fetchConfig.headers
+      });
+      
+      if (!response.ok) {
+        throw new Error('Error al cargar categorías');
+      }
+      
+      const data = await response.json();
+      setCategorias(data);
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   const resetFormulario = () => {
@@ -56,29 +105,39 @@ export default function AdmonLibros() {
 
   const handleEdit = (libro) => {
     setNombre(libro.nombre);
-    setAutorId(libro.autor?.id || '');
-    setCategoriaId(libro.categoria?.id || '');
+    setAutorId(libro.autor?.id?.toString() || '');
+    setCategoriaId(libro.categoria?.id?.toString() || '');
     setImagenUrl(libro.imagenUrl || '');
     setEditando(libro.id);
     setError(null);
     setSuccess(null);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (window.confirm('¿Estás seguro de eliminar este libro?')) {
-      setLoading(true);
-      fetch(`http://localhost:8080/libros/${id}`, { method: 'DELETE' })
-        .then(res => {
-          if (!res.ok) throw new Error('Error al eliminar el libro');
-          setSuccess('Libro eliminado correctamente');
-          cargarLibros();
-        })
-        .catch(err => setError(err.message))
-        .finally(() => setLoading(false));
+      try {
+        setLoading(true);
+        const response = await fetch(`${fetchConfig.baseUrl}/libros/${id}`, {
+          method: 'DELETE',
+          headers: fetchConfig.headers
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || `Error ${response.status}`);
+        }
+
+        setSuccess('Libro eliminado correctamente');
+        await cargarLibros();
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
@@ -90,30 +149,41 @@ export default function AdmonLibros() {
 
     const libro = {
       nombre,
-      autor: { id: Number(autorId) },
-      categoria: { id: Number(categoriaId) },
-      imagenUrl,
+      autor: { id: parseInt(autorId) },  // Convertir a número
+      categoria: { id: parseInt(categoriaId) },  // Convertir a número
+      imagenUrl: imagenUrl || null
     };
 
-    const url = editando
-      ? `http://localhost:8080/libros/${editando}`
-      : 'http://localhost:8080/libros';
-    const method = editando ? 'PUT' : 'POST';
+    try {
+      setLoading(true);
+      const url = editando 
+        ? `${fetchConfig.baseUrl}/libros/${editando}` 
+        : `${fetchConfig.baseUrl}/libros`;
+      
+      const method = editando ? 'PUT' : 'POST';
 
-    setLoading(true);
-    fetch(url, {
-      method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(libro),
-    })
-      .then(res => {
-        if (!res.ok) throw new Error('Error al guardar el libro');
-        setSuccess(editando ? 'Libro actualizado correctamente' : 'Libro agregado correctamente');
-        cargarLibros();
-        resetFormulario();
-      })
-      .catch(err => setError(err.message))
-      .finally(() => setLoading(false));
+      const response = await fetch(url, {
+        method,
+        headers: fetchConfig.headers,
+        body: JSON.stringify(libro),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `Error ${response.status}`);
+      }
+
+      setSuccess(editando 
+        ? 'Libro actualizado correctamente' 
+        : 'Libro agregado correctamente');
+      
+      await cargarLibros();
+      resetFormulario();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -123,7 +193,12 @@ export default function AdmonLibros() {
           📚 Gestión de Libros
           {editando && <span className="badge bg-warning text-dark ms-3">Editando</span>}
         </h2>
-        <button className="btn btn-success" onClick={resetFormulario} type="button">
+        <button 
+          className="btn btn-success" 
+          onClick={resetFormulario} 
+          type="button"
+          disabled={loading}
+        >
           {editando ? 'Cancelar edición' : '+ Crear Libro'}
         </button>
       </div>
@@ -150,7 +225,9 @@ export default function AdmonLibros() {
           >
             <option value="">Seleccione autor</option>
             {autores.map(a => (
-              <option key={a.id} value={a.id}>{a.nombre}</option>
+              <option key={a.id} value={a.id}>
+                {a.nombre}
+              </option>
             ))}
           </select>
         </div>
@@ -164,7 +241,9 @@ export default function AdmonLibros() {
           >
             <option value="">Seleccione categoría</option>
             {categorias.map(c => (
-              <option key={c.id} value={c.id}>{c.nombre}</option>
+              <option key={c.id} value={c.id}>
+                {c.nombre}
+              </option>
             ))}
           </select>
         </div>
@@ -179,50 +258,72 @@ export default function AdmonLibros() {
           />
         </div>
         <div className="col-md-2">
-          <button type="submit" className="btn btn-primary w-100" disabled={loading}>
-            {editando ? 'Guardar' : 'Agregar'}
+          <button 
+            type="submit" 
+            className="btn btn-primary w-100" 
+            disabled={loading}
+          >
+            {loading ? 'Procesando...' : editando ? 'Guardar' : 'Agregar'}
           </button>
         </div>
       </form>
 
       {loading && <div className="alert alert-info py-2">Cargando...</div>}
-      {error && <div className="alert alert-danger py-2">{error}</div>}
-      {success && <div className="alert alert-success py-2">{success}</div>}
+      {error && (
+        <div className="alert alert-danger py-2">
+          <strong>Error:</strong> {error}
+        </div>
+      )}
+      {success && (
+        <div className="alert alert-success py-2">
+          <strong>Éxito:</strong> {success}
+        </div>
+      )}
 
       <div className="row g-4">
-        {books.map((book) => (
-          <div className="col-md-4" key={book.id}>
-            <div className="card shadow-sm h-100">
-              <img
-                src={book.imagenUrl || 'https://placehold.co/220x260?text=Libro'}
-                alt={book.nombre || 'Sin título'}
-                className="card-img-top"
-                style={{ height: 220, objectFit: 'cover' }}
-              />
-              <div className="card-body">
-                <h5 className="card-title">{book.nombre || 'Sin título'}</h5>
-                <p><strong>Autor:</strong> {book.autor?.nombre}</p>
-                <p><strong>Categoría:</strong> {book.categoria?.nombre}</p>
-              </div>
-              <div className="card-footer d-flex justify-content-between">
-                <button
-                  className="btn btn-outline-primary btn-sm"
-                  onClick={() => handleEdit(book)}
-                  disabled={loading}
-                >
-                  <i className="fas fa-pen"></i> Editar
-                </button>
-                <button
-                  className="btn btn-outline-danger btn-sm"
-                  onClick={() => handleDelete(book.id)}
-                  disabled={loading}
-                >
-                  <i className="fas fa-trash"></i> Eliminar
-                </button>
+        {books.length > 0 ? (
+          books.map((book) => (
+            <div className="col-md-4" key={book.id}>
+              <div className="card shadow-sm h-100">
+                <img
+                  src={book.imagenUrl || 'https://placehold.co/220x260?text=Libro'}
+                  alt={book.nombre || 'Sin título'}
+                  className="card-img-top"
+                  style={{ height: 220, objectFit: 'cover' }}
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{book.nombre || 'Sin título'}</h5>
+                  <p><strong>Autor:</strong> {book.autor?.nombre || 'Desconocido'}</p>
+                  <p><strong>Categoría:</strong> {book.categoria?.nombre || 'Sin categoría'}</p>
+                </div>
+                <div className="card-footer d-flex justify-content-between">
+                  <button
+                    className="btn btn-outline-primary btn-sm"
+                    onClick={() => handleEdit(book)}
+                    disabled={loading}
+                  >
+                    <i className="fas fa-pen"></i> Editar
+                  </button>
+                  <button
+                    className="btn btn-outline-danger btn-sm"
+                    onClick={() => handleDelete(book.id)}
+                    disabled={loading}
+                  >
+                    <i className="fas fa-trash"></i> Eliminar
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          !loading && (
+            <div className="col-12">
+              <div className="alert alert-warning">
+                No se encontraron libros. ¡Agrega uno nuevo!
+              </div>
+            </div>
+          )
+        )}
       </div>
     </div>
   );
