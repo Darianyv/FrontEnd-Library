@@ -27,6 +27,16 @@ function Prestamos() {
   const guardarDatos = async (e) => {
     e.preventDefault();
 
+    // Validar que la fecha de préstamo sea hoy o mayor
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0); // Ignorar hora
+    const fechaPrestamoDate = new Date(fechaPrestamo);
+
+    if (fechaPrestamoDate < hoy) {
+      alert('La fecha de préstamo debe ser hoy o una fecha futura.');
+      return;
+    }
+
     const user = JSON.parse(localStorage.getItem('currentUser'));
     if (!user) {
       alert('Debes iniciar sesión');
@@ -57,6 +67,12 @@ function Prestamos() {
     }
   };
 
+  // Obtener la fecha mínima para el input de fecha (hoy)
+  const minFechaPrestamo = (() => {
+    const d = new Date();
+    return d.toISOString().split('T')[0];
+  })();
+
   return (
     <div className="app-container">
       <HeaderFront />
@@ -74,19 +90,19 @@ function Prestamos() {
                       <label className="form-label fw-semibold">
                         <i className="fas fa-book me-2"></i>Seleccionar libro
                       </label>
-                      <select
-                        className="form-select"
-                        value={libroId}
-                        onChange={e => setLibroId(e.target.value)}
-                        required
-                      >
-                        <option value="">-- Elige un libro --</option>
-                        {libros.map(libro => (
-                          <option key={libro.id} value={libro.id}>
-                            {libro.titulo}
-                          </option>
-                        ))}
-                      </select>
+                        <select
+                          className="form-select"
+                          value={libroId}
+                          onChange={e => setLibroId(e.target.value)}
+                          required
+                        >
+                          <option value="">-- Elige un libro --</option>
+                          {libros.map(libro => (
+                            <option key={libro.id} value={libro.id}>
+                              {libro.nombre}
+                            </option>
+                          ))}
+                        </select>
                     </div>
                     <div className="mb-3">
                       <label className="form-label fw-semibold">
@@ -95,6 +111,7 @@ function Prestamos() {
                       <input
                         type="date"
                         value={fechaPrestamo}
+                        min={minFechaPrestamo}
                         onChange={(e) => setFechaPrestamo(e.target.value)}
                         className="form-control"
                         required

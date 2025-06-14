@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const HeaderFront = () => (
 
+    
     <header className="navbar navbar-expand-lg navbar-dark bg-primary px-4 py-3">
         <div className="container-fluid">
             {/* Primera fila: Marca a la izquierda */}
@@ -13,7 +14,20 @@ const HeaderFront = () => (
                         <span className="fw-bold fs-4">Sombras & Letras</span>
                     </Link>
                 </div>
-                {/* Se eliminó la barra de búsqueda de aquí */}
+                {/* Segunda fila: Barra de búsqueda centralizada */}
+                <div className="col-6 d-flex justify-content-end">
+                    <form className="d-flex w-100" style={{ maxWidth: 400 }}>
+                        <input
+                            className="form-control me-2"
+                            type="search"
+                            placeholder="¿Qué quieres leer hoy?"
+                            aria-label="Buscar"
+                        />
+                        <button className="btn btn-outline-light" type="submit">
+                            <i className="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
             {/* Menú centralizado */}
             <div className="row w-100 justify-content-center">
