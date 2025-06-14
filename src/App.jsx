@@ -13,6 +13,7 @@ import Header from './admin/components/Header';
 import AdmonLibros from './admin/components/AdmonLibros';
 import AdmonUsuarios from './admin/components/AdmonUsuarios';
 import AdmonAutores from './admin/components/AdmonAutores';
+import AdmonPrestamos from './admin/components/AdmonPrestamos'; // ✅ Importación agregada
 
 import ProtectedRoute from './frontend/components/ProtectedRoute';
 import ClienteDashboard from './frontend/components/ClienteDashboard';
@@ -48,7 +49,7 @@ function App() {
           }
         />
 
-        {/* Ruta protegida para admin: galería de libros */}
+        {/* Ruta protegida para admin: libros */}
         <Route
           path="/admin/AdmonLibros"
           element={
@@ -80,7 +81,7 @@ function App() {
           }
         />
 
-        {/* ✅ NUEVA RUTA: administración de autores */}
+        {/* Ruta protegida para admin: autores */}
         <Route
           path="/admin/AdmonAutores"
           element={
@@ -90,6 +91,22 @@ function App() {
                 <div className="flex-grow-1">
                   <Header />
                   <AdmonAutores />
+                </div>
+              </div>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ✅ Ruta protegida para admin: préstamos */}
+        <Route
+          path="/admin/AdmonPrestamos"
+          element={
+            <ProtectedRoute role="admin">
+              <div className="d-flex">
+                <Aside />
+                <div className="flex-grow-1">
+                  <Header />
+                  <AdmonPrestamos />
                 </div>
               </div>
             </ProtectedRoute>
