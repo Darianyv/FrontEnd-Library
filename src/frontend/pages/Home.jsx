@@ -1,43 +1,48 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Scrollbar } from 'swiper/modules';
 import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/scrollbar';
 import '../../assets/styles/home.css';
 import Footer from '../components/Footer';
 import HeaderFront from '../components/HeaderFront';
 import BookCard from '../components/BookCard';
+import AutorCard from '../components/AutorCard';
 
 function Home() {
-  const libros = [
-  {
-    titulo: "Cien años de soledad",
-    autor: "Gabriel García Márquez",
-    categoria: "Novela",
-    popularidad: 4.8,
-    img: "https://www.alianzalibros.com/wp-content/uploads/2024/11/cien-anos-de-soledad.webp"
-  },
-  {
-    titulo: "El Principito",
-    autor: "Antoine de Saint-Exupéry",
-    categoria: "Fábula",
-    popularidad: 4.9,
-    img: "https://m.media-amazon.com/images/I/71X1p4TGlxL._AC_UF1000,1000_QL80_.jpg"
-  },
-  {
-    titulo: "1984",
-    autor: "George Orwell",
-    categoria: "Ciencia Ficción",
-    popularidad: 4.7,
-    img: "https://m.media-amazon.com/images/I/81dQwQlmAXL._AC_UF1000,1000_QL80_.jpg"
-  },
-  {
-    titulo: "Don Quijote de la Mancha",
-    autor: "Miguel de Cervantes",
-    categoria: "Clásico",
-    popularidad: 4.6,
-    img: "https://m.media-amazon.com/images/I/91SZSW8qSsL._AC_UF1000,1000_QL80_.jpg"
-  }
-];
+  const [autores, setAutores] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const [libros, setLibros] = useState([]);
+  const [loadingLibros, setLoadingLibros] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/autores")
+      .then((res) => res.json())
+      .then((data) => {
+        setAutores(Array.isArray(data) ? data : []);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error al cargar autores:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/libros")
+      .then((res) => res.json())
+      .then((data) => {
+        setLibros(Array.isArray(data) ? data : []);
+        setLoadingLibros(false);
+      })
+      .catch((error) => {
+        console.error("Error al cargar libros:", error);
+        setLoadingLibros(false);
+      });
+  }, []);
 
   const categorias = [
     { nombre: "Literatura", icono: "fas fa-book" },
@@ -50,9 +55,7 @@ function Home() {
 
   return (
     <div className="app-container">
-
       <HeaderFront />
-     {/* Main Content */}
       <main className="main-content">
         {/* Hero Section */}
         <section className="hero py-5">
@@ -76,16 +79,56 @@ function Home() {
           </div>
         </section>
         
-        {/* Libros destacados */}
+        {/* Libros destacados en carrusel */}
         <section className="featured-books py-5">
           <h2 className="fw-bold text-center mb-4">Libros destacados</h2>
-          <div className="row justify-content-center g-4">
-            {libros.map((libro, idx) => (
-              <div className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex" key={idx}>
-                <BookCard libro={libro} />
-              </div>
-            ))}
-          </div>
+          {loadingLibros ? (
+            <p className="text-center">Cargando libros...</p>
+          ) : (
+            <Swiper
+              spaceBetween={24}
+              slidesPerView={1}
+              breakpoints={{
+                576: { slidesPerView: 2 },
+                768: { slidesPerView: 3 },
+                992: { slidesPerView: 4 }
+              }}
+            >
+              {libros.map((libro) => (
+                <SwiperSlide key={libro.id}>
+                  <BookCard libro={libro} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
+        </section>
+
+        {/* Autores en carrusel con navegación y slides parcialmente visibles */}
+        <section className="autores-section py-5">
+          <h2 className="fw-bold text-center mb-4">Autores</h2>
+          {loading ? (
+            <p className="text-center">Cargando autores...</p>
+          ) : (
+            <Swiper
+              modules={[Navigation, Scrollbar]}
+              navigation
+              scrollbar={{ draggable: true }}
+              spaceBetween={24}
+              slidesPerView={1.2}
+              breakpoints={{
+                576: { slidesPerView: 2.2 },
+                768: { slidesPerView: 3.2 },
+                1200: { slidesPerView: 4.2 }
+              }}
+              style={{ padding: '0 20px' }}
+            >
+              {autores.map((autor) => (
+                <SwiperSlide key={autor.id}>
+                  <AutorCard autor={autor} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
         </section>
 
         {/* Categorías */}
@@ -106,14 +149,9 @@ function Home() {
           </div>
         </section>
       </main> 
-      {/* Footer */}
       <Footer />
     </div>
-
-      
-
   );
 }
 
 export default Home;
-

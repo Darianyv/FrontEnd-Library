@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import '../../assets/styles/libros.css';
 import Footer from '../components/Footer';
 import HeaderFront from '../components/HeaderFront';
 import BookCard from '../components/BookCard';
 
-const categories = ['Todos', 'Novela', 'Ciencia Ficción', 'Clásico', 'Fábula', 'Fantasía'];
+const categorias = [
+  { icono: 'fas fa-magic', nombre: 'Realismo mágico', ruta: '/libros?categoria=realismo mágico' },
+  { icono: 'fas fa-heart', nombre: 'Romántico', ruta: '/libros?categoria=romántico' },
+  { icono: 'fas fa-robot', nombre: 'Ciencia Ficción', ruta: '/libros?categoria=ciencia ficción' },
+  { icono: 'fas fa-hat-wizard', nombre: 'Fantasía', ruta: '/libros?categoria=fantasía' },
+  { icono: 'fas fa-feather-alt', nombre: 'Fábula', ruta: '/libros?categoria=fábula' },
+  { icono: 'fas fa-search', nombre: 'Misterio', ruta: '/libros?categoria=misterio' },
+  { icono: 'fas fa-scroll', nombre: 'Clásico', ruta: '/libros?categoria=clásico' },
+  { icono: 'fas fa-skull', nombre: 'Terror', ruta: '/libros?categoria=terror' },
+  { icono: 'fas fa-landmark', nombre: 'Épico', ruta: '/libros?categoria=épico' }
+];
 
 function Libros() {
   const [books, setBooks] = useState([]);
@@ -14,14 +23,13 @@ function Libros() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Cambia la URL por la de tu API real
     fetch('http://localhost:8080/libros')
       .then(res => {
         if (!res.ok) throw new Error('Error al cargar los libros');
         return res.json();
       })
       .then(data => {
-        setBooks(data);
+        setBooks(Array.isArray(data) ? data : []);
         setLoading(false);
       })
       .catch(err => {
@@ -33,7 +41,7 @@ function Libros() {
   const filteredBooks =
     selectedCategory === 'Todos'
       ? books
-      : books.filter(book => book.category === selectedCategory);
+      : books.filter(book => book.categoria?.nombre === selectedCategory);
 
   return (
     <div className="app-container">
@@ -47,13 +55,20 @@ function Libros() {
           </div>
 
           <div className="gallery-filters d-flex justify-content-center mb-4 flex-wrap gap-2">
-            {categories.map(cat => (
+            <button
+              className={`btn btn-outline-primary ${selectedCategory === 'Todos' ? 'active' : ''}`}
+              onClick={() => setSelectedCategory('Todos')}
+            >
+              Todos
+            </button>
+            {categorias.map(cat => (
               <button
-                key={cat}
-                className={`btn btn-outline-primary ${selectedCategory === cat ? 'active' : ''}`}
-                onClick={() => setSelectedCategory(cat)}
+                key={cat.nombre}
+                className={`btn btn-outline-primary ${selectedCategory === cat.nombre ? 'active' : ''}`}
+                onClick={() => setSelectedCategory(cat.nombre)}
               >
-                {cat}
+                <i className={`${cat.icono} me-1`}></i>
+                {cat.nombre}
               </button>
             ))}
           </div>
@@ -62,17 +77,9 @@ function Libros() {
           {error && <p className="text-danger">{error}</p>}
 
           <div className="row g-4 justify-content-center">
-            {filteredBooks.map((book, index) => (
-              <div className="col-12 col-sm-6 col-lg-4" key={index}>
-                <BookCard
-                  libro={{
-                    titulo: book.nombre,
-                    autor: book.autor?.nombre,            
-                    categoria: book.categoria?.nombre,     
-                    img: book.imagenUrl,                  
-                    popularidad: book.popularidad
-                  }}
-                />
+            {filteredBooks.map((book) => (
+              <div className="col-12 col-sm-6 col-lg-4" key={book.id}>
+                <BookCard libro={book} />
               </div>
             ))}
           </div>
