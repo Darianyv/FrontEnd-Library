@@ -1,53 +1,65 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function Aside() {
+  const sidebarStyle = {
+    backgroundColor: '#0d6efd', // Azul Bootstrap
+    minHeight: '100vh',
+    width: 240,
+    padding: '2rem 1rem',
+    boxShadow: '2px 0 8px rgba(0, 0, 0, 0.05)',
+    color: '#ffffff',
+  };
+
+  const linkStyle = {
+    backgroundColor: '#e0edff',
+    color: '#0d1b2a',
+    border: 'none',
+    fontWeight: '500',
+    transition: 'all 0.2s ease',
+  };
+
+  const hoverStyle = {
+    backgroundColor: '#cfe2ff',
+    color: '#0a1f3c',
+  };
+
+  const [hovered, setHovered] = useState(null);
+
+  const menuItems = [
+    { to: '/admin', label: 'Dashboard', icon: 'fas fa-tachometer-alt' },
+    { to: '/admin/libros', label: 'Libros', icon: 'fas fa-book' }, // ✅ Va a la galería admin
+    { to: '/admin/usuarios', label: 'Usuarios', icon: 'fas fa-user' },
+    { to: '/admin/prestamos', label: 'Préstamos', icon: 'fas fa-handshake' },
+    { to: '/admin/autores', label: 'Autores', icon: 'fas fa-user-edit' },
+    { to: '/admin/categorias', label: 'Categorías', icon: 'fas fa-tags' },
+  ];
+
   return (
-    <aside
-      className="bg-primary text-white vh-100 p-3"
-      style={{ minWidth: 240, overflowY: 'auto' }}
-    >
+    <aside style={sidebarStyle}>
       <div className="d-flex align-items-center mb-4">
-        <i className="fas fa-user-shield fa-2x me-2"></i>
+        <i className="fas fa-user-shield fa-lg me-2"></i>
         <span className="fs-5 fw-bold">Administrador</span>
       </div>
+
       <nav>
-        <ul className="nav flex-column aside-menu">
-          {/* Dashboard */}
-          <li className="nav-item mb-2">
-            <Link to="/admin" className="nav-link text-white">
-              <i className="fas fa-tachometer-alt me-2"></i> Dashboard
-            </Link>
-          </li>
-          {/* Libros */}
-          <li className="nav-item mb-2 position-relative aside-dropdown">
-            <span className="nav-link text-white aside-dropdown-toggle" tabIndex={0}>
-              <i className="fas fa-book me-2"></i> Libros
-            </span>
-          </li>
-          {/* Usuarios */}
-          <li className="nav-item mb-2 position-relative aside-dropdown">
-            <span className="nav-link text-white aside-dropdown-toggle" tabIndex={0}>
-              <i className="fas fa-user me-2"></i> Usuarios
-            </span>
-          </li>
-          {/* Préstamos */}
-          <li className="nav-item mb-2 position-relative aside-dropdown">
-            <span className="nav-link text-white aside-dropdown-toggle" tabIndex={0}>
-              <i className="fas fa-handshake me-2"></i> Préstamos
-            </span>
-          </li>
-          {/* Autores */}
-          <li className="nav-item mb-2 position-relative aside-dropdown">
-            <span className="nav-link text-white aside-dropdown-toggle" tabIndex={0}>
-              <i className="fas fa-user-edit me-2"></i> Autores
-            </span>
-          </li>
-          {/* Categorías */}
-          <li className="nav-item mb-2 position-relative aside-dropdown">
-            <span className="nav-link text-white aside-dropdown-toggle" tabIndex={0}>
-              <i className="fas fa-tags me-2"></i> Categorías
-            </span>
-          </li>
+        <ul className="nav flex-column gap-2">
+          {menuItems.map((item, index) => (
+            <li className="nav-item" key={index}>
+              <Link
+                to={item.to}
+                className="btn text-start w-100"
+                style={{
+                  ...linkStyle,
+                  ...(hovered === index ? hoverStyle : {}),
+                }}
+                onMouseEnter={() => setHovered(index)}
+                onMouseLeave={() => setHovered(null)}
+              >
+                <i className={`${item.icon} me-2`}></i> {item.label}
+              </Link>
+            </li>
+          ))}
         </ul>
       </nav>
     </aside>
