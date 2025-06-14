@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import Footer from '../components/Footer';
 import HeaderFront from '../components/HeaderFront';
+import { API_BASE_URL } from '../../config';
 
 function Prestamos() {
+  const [libros, setLibros] = useState([]);
+  const [libroId, setLibroId] = useState('');
   const [dias, setDias] = useState('');
   const [fechaPrestamo, setFechaPrestamo] = useState('');
   const [fechaDevolucion, setFechaDevolucion] = useState('');
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/libros`)
+      .then(res => res.json())
+      .then(setLibros)
+      .catch(err => console.error('Error al cargar libros', err));
+  }, []);
 
   const calcularFechaDevolucion = () => {
     if (!fechaPrestamo || !dias) return;
@@ -15,17 +24,42 @@ function Prestamos() {
     setFechaDevolucion(fecha.toISOString().split('T')[0]);
   };
 
-  const guardarDatos = (e) => {
+  const guardarDatos = async (e) => {
     e.preventDefault();
-    alert('Datos guardados correctamente.');
-    // Aquí podrías enviar los datos a una API si luego deseas conectar con backend.
+
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (!user) {
+      alert('Debes iniciar sesión');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8080/prestamos`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fechaprestamo: fechaPrestamo,
+          fechadevolucion: fechaDevolucion,
+          usuario: { id: user.id },
+          libro: { id: libroId }
+        })
+      });
+
+      if (response.ok) {
+        alert('Préstamo registrado con éxito');
+      } else {
+        const msg = await response.text();
+        alert(`Error al guardar: ${msg}`);
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Error al conectar con el servidor');
+    }
   };
 
   return (
     <div className="app-container">
       <HeaderFront />
-
-       {/* Main Content */}
       <main className="main-content min-vh-100 py-5">
         <section className="container">
           <div className="row justify-content-center">
@@ -38,15 +72,21 @@ function Prestamos() {
                   <form onSubmit={guardarDatos}>
                     <div className="mb-3">
                       <label className="form-label fw-semibold">
-                        <i className="fas fa-user me-2"></i>Nombre del lector
+                        <i className="fas fa-book me-2"></i>Seleccionar libro
                       </label>
-                      <input type="text" name="nombre" className="form-control" required />
-                    </div>
-                    <div className="mb-3">
-                      <label className="form-label fw-semibold">
-                        <i className="fas fa-book me-2"></i>Título del libro
-                      </label>
-                      <input type="text" name="libro" className="form-control" required />
+                      <select
+                        className="form-select"
+                        value={libroId}
+                        onChange={e => setLibroId(e.target.value)}
+                        required
+                      >
+                        <option value="">-- Elige un libro --</option>
+                        {libros.map(libro => (
+                          <option key={libro.id} value={libro.id}>
+                            {libro.titulo}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <div className="mb-3">
                       <label className="form-label fw-semibold">
@@ -60,7 +100,7 @@ function Prestamos() {
                         required
                       />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-3">
                       <label className="form-label fw-semibold">
                         <i className="fas fa-clock me-2"></i>Días de préstamo
                       </label>
@@ -73,24 +113,18 @@ function Prestamos() {
                         required
                       />
                     </div>
-                    <div className="d-flex flex-wrap gap-2 justify-content-center mb-3">
-                      <button type="button" className="btn btn-primary text-white" onClick={calcularFechaDevolucion}>
+                    <div className="d-flex gap-2 justify-content-center mb-3">
+                      <button type="button" className="btn btn-primary" onClick={calcularFechaDevolucion}>
                         <i className="fas fa-calendar-check me-1"></i> Calcular devolución
                       </button>
-                      <button type="submit" className="btn btn-outline-primary text-primary">
+                      <button type="submit" className="btn btn-outline-primary">
                         <i className="fas fa-save me-1"></i> Guardar datos
-                      </button>
-                      <button type="button" className="btn btn-outline-primary text-primary">
-                        <i className="fas fa-calendar-plus me-1"></i> Reservar libro
-                      </button>
-                      <button type="button" className="btn btn-outline-primary text-primary">
-                        <i className="fas fa-exchange-alt me-1"></i> Cambiar libro
                       </button>
                     </div>
                     {fechaDevolucion && (
-                      <div className="alert alert-primary text-center fw-semibold mt-3 mb-0" role="alert">
+                      <div className="alert alert-primary text-center fw-semibold">
                         <i className="fas fa-calendar-day me-2"></i>
-                        Fecha estimada de devolución: <strong>{fechaDevolucion}</strong>
+                        Fecha de devolución: <strong>{fechaDevolucion}</strong>
                       </div>
                     )}
                   </form>

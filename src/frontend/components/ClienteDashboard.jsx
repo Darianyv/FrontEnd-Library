@@ -14,13 +14,13 @@ const Bienvenida = () => {
       <div className="d-flex justify-content-center gap-3">
         <button
           className="btn btn-primary rounded-pill px-4"
-          onClick={() => navigate("/explorar")}
+          onClick={() => navigate("/libros")}
         >
           Explorar libros
         </button>
         <button
           className="btn btn-success rounded-pill px-4"
-          onClick={() => navigate("/registro")}
+          onClick={() => navigate("/prestamos")}
         >
           Reserva tu libro
         </button>

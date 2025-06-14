@@ -28,7 +28,7 @@ export default function Login() {
       const user = await response.json();
       localStorage.setItem('currentUser', JSON.stringify(user));
       alert('Inicio de sesión exitoso');
-      navigate(user.role === 'admin' ? '/admin' : '/');
+      navigate(user.role === 'admin' ? '/admin' : '/cliente');
     } catch (error) {
       alert('Error al iniciar sesión');
       console.error(error);
