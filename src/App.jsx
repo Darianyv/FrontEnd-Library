@@ -12,6 +12,7 @@ import Content from './admin/components/Content';
 import Header from './admin/components/Header';
 import AdmonLibros from './admin/components/AdmonLibros';
 import AdmonUsuarios from './admin/components/AdmonUsuarios';
+import AdmonAutores from './admin/components/AdmonAutores';
 
 import ProtectedRoute from './frontend/components/ProtectedRoute';
 import ClienteDashboard from './frontend/components/ClienteDashboard';
@@ -73,6 +74,22 @@ function App() {
                 <div className="flex-grow-1">
                   <Header />
                   <AdmonUsuarios />
+                </div>
+              </div>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ✅ NUEVA RUTA: administración de autores */}
+        <Route
+          path="/admin/AdmonAutores"
+          element={
+            <ProtectedRoute role="admin">
+              <div className="d-flex">
+                <Aside />
+                <div className="flex-grow-1">
+                  <Header />
+                  <AdmonAutores />
                 </div>
               </div>
             </ProtectedRoute>

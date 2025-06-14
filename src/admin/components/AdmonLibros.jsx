@@ -6,8 +6,9 @@ export default function AdmonLibros() {
   const [categorias, setCategorias] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
-  const [titulo, setTitulo] = useState('');
+  const [nombre, setNombre] = useState('');
   const [autorId, setAutorId] = useState('');
   const [categoriaId, setCategoriaId] = useState('');
   const [imagenUrl, setImagenUrl] = useState('');
@@ -44,47 +45,53 @@ export default function AdmonLibros() {
   };
 
   const resetFormulario = () => {
-    setTitulo('');
+    setNombre('');
     setAutorId('');
     setCategoriaId('');
     setImagenUrl('');
     setEditando(null);
     setError(null);
+    setSuccess(null);
   };
 
   const handleEdit = (libro) => {
-    setTitulo(libro.titulo);
+    setNombre(libro.nombre);
     setAutorId(libro.autor?.id || '');
     setCategoriaId(libro.categoria?.id || '');
     setImagenUrl(libro.imagenUrl || '');
     setEditando(libro.id);
     setError(null);
+    setSuccess(null);
   };
 
   const handleDelete = (id) => {
     if (window.confirm('¿Estás seguro de eliminar este libro?')) {
+      setLoading(true);
       fetch(`http://localhost:8080/libros/${id}`, { method: 'DELETE' })
         .then(res => {
           if (!res.ok) throw new Error('Error al eliminar el libro');
+          setSuccess('Libro eliminado correctamente');
           cargarLibros();
         })
-        .catch(err => setError(err.message));
+        .catch(err => setError(err.message))
+        .finally(() => setLoading(false));
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError(null);
+    setSuccess(null);
 
-    if (!titulo || !autorId || !categoriaId) {
+    if (!nombre || !autorId || !categoriaId) {
       setError('Todos los campos son obligatorios');
       return;
     }
 
     const libro = {
-      titulo,
-      autor: { id: autorId },
-      categoria: { id: categoriaId },
+      nombre,
+      autor: { id: Number(autorId) },
+      categoria: { id: Number(categoriaId) },
       imagenUrl,
     };
 
@@ -93,6 +100,7 @@ export default function AdmonLibros() {
       : 'http://localhost:8080/libros';
     const method = editando ? 'PUT' : 'POST';
 
+    setLoading(true);
     fetch(url, {
       method,
       headers: { 'Content-Type': 'application/json' },
@@ -100,17 +108,22 @@ export default function AdmonLibros() {
     })
       .then(res => {
         if (!res.ok) throw new Error('Error al guardar el libro');
+        setSuccess(editando ? 'Libro actualizado correctamente' : 'Libro agregado correctamente');
         cargarLibros();
         resetFormulario();
       })
-      .catch(err => setError(err.message));
+      .catch(err => setError(err.message))
+      .finally(() => setLoading(false));
   };
 
   return (
     <div className="container py-4 bg-light rounded">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2 className="fw-bold">📚 Gestión de Libros</h2>
-        <button className="btn btn-success" onClick={resetFormulario}>
+        <h2 className="fw-bold">
+          📚 Gestión de Libros
+          {editando && <span className="badge bg-warning text-dark ms-3">Editando</span>}
+        </h2>
+        <button className="btn btn-success" onClick={resetFormulario} type="button">
           {editando ? 'Cancelar edición' : '+ Crear Libro'}
         </button>
       </div>
@@ -120,10 +133,11 @@ export default function AdmonLibros() {
           <input
             type="text"
             className="form-control"
-            placeholder="Título"
-            value={titulo}
-            onChange={(e) => setTitulo(e.target.value)}
+            placeholder="Nombre del libro"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
             required
+            disabled={loading}
           />
         </div>
         <div className="col-md-2">
@@ -132,6 +146,7 @@ export default function AdmonLibros() {
             value={autorId}
             onChange={(e) => setAutorId(e.target.value)}
             required
+            disabled={loading}
           >
             <option value="">Seleccione autor</option>
             {autores.map(a => (
@@ -145,6 +160,7 @@ export default function AdmonLibros() {
             value={categoriaId}
             onChange={(e) => setCategoriaId(e.target.value)}
             required
+            disabled={loading}
           >
             <option value="">Seleccione categoría</option>
             {categorias.map(c => (
@@ -159,17 +175,19 @@ export default function AdmonLibros() {
             placeholder="URL de la imagen"
             value={imagenUrl}
             onChange={(e) => setImagenUrl(e.target.value)}
+            disabled={loading}
           />
         </div>
         <div className="col-md-2">
-          <button type="submit" className="btn btn-primary w-100">
+          <button type="submit" className="btn btn-primary w-100" disabled={loading}>
             {editando ? 'Guardar' : 'Agregar'}
           </button>
         </div>
       </form>
 
-      {loading && <p>Cargando libros...</p>}
-      {error && <p className="text-danger">{error}</p>}
+      {loading && <div className="alert alert-info py-2">Cargando...</div>}
+      {error && <div className="alert alert-danger py-2">{error}</div>}
+      {success && <div className="alert alert-success py-2">{success}</div>}
 
       <div className="row g-4">
         {books.map((book) => (
@@ -177,12 +195,12 @@ export default function AdmonLibros() {
             <div className="card shadow-sm h-100">
               <img
                 src={book.imagenUrl || 'https://placehold.co/220x260?text=Libro'}
-                alt={book.titulo || 'Sin título'}
+                alt={book.nombre || 'Sin título'}
                 className="card-img-top"
                 style={{ height: 220, objectFit: 'cover' }}
               />
               <div className="card-body">
-                <h5 className="card-title">{book.titulo || 'Sin título'}</h5>
+                <h5 className="card-title">{book.nombre || 'Sin título'}</h5>
                 <p><strong>Autor:</strong> {book.autor?.nombre}</p>
                 <p><strong>Categoría:</strong> {book.categoria?.nombre}</p>
               </div>
@@ -190,12 +208,14 @@ export default function AdmonLibros() {
                 <button
                   className="btn btn-outline-primary btn-sm"
                   onClick={() => handleEdit(book)}
+                  disabled={loading}
                 >
                   <i className="fas fa-pen"></i> Editar
                 </button>
                 <button
                   className="btn btn-outline-danger btn-sm"
                   onClick={() => handleDelete(book.id)}
+                  disabled={loading}
                 >
                   <i className="fas fa-trash"></i> Eliminar
                 </button>
