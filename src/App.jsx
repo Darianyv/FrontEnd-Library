@@ -10,8 +10,8 @@ import Registro from './frontend/pages/Registro';
 import Aside from './admin/components/Aside';
 import Content from './admin/components/Content';
 import Header from './admin/components/Header';
-import LibrosGaleria from './admin/components/LibrosGaleria';
-import Usuarios from './admin/components/Usuarios'; 
+import AdmonLibros from './admin/components/AdmonLibros';
+import AdmonUsuarios from './admin/components/AdmonUsuarios';
 
 import ProtectedRoute from './frontend/components/ProtectedRoute';
 import ClienteDashboard from './frontend/components/ClienteDashboard';
@@ -49,30 +49,30 @@ function App() {
 
         {/* Ruta protegida para admin: galería de libros */}
         <Route
-          path="/admin/libros"
+          path="/admin/AdmonLibros"
           element={
             <ProtectedRoute role="admin">
               <div className="d-flex">
                 <Aside />
                 <div className="flex-grow-1">
                   <Header />
-                  <LibrosGaleria />
+                  <AdmonLibros />
                 </div>
               </div>
             </ProtectedRoute>
           }
         />
 
-        {/* ✅ Ruta protegida para admin: usuarios */}
+        {/* Ruta protegida para admin: usuarios */}
         <Route
-          path="/admin/usuarios"
+          path="/admin/AdmonUsuarios"
           element={
             <ProtectedRoute role="admin">
               <div className="d-flex">
                 <Aside />
                 <div className="flex-grow-1">
                   <Header />
-                  <Usuarios />
+                  <AdmonUsuarios />
                 </div>
               </div>
             </ProtectedRoute>

@@ -28,8 +28,8 @@ export default function Aside() {
 
   const menuItems = [
     { to: '/admin', label: 'Dashboard', icon: 'fas fa-tachometer-alt' },
-    { to: '/admin/libros', label: 'Libros', icon: 'fas fa-book' }, // ✅ Va a la galería admin
-    { to: '/admin/usuarios', label: 'Usuarios', icon: 'fas fa-user' },
+    { to: '/admin/AdmonLibros', label: 'Libros', icon: 'fas fa-book' },
+    { to: '/admin/AdmonUsuarios', label: 'Usuarios', icon: 'fas fa-user' },
     { to: '/admin/prestamos', label: 'Préstamos', icon: 'fas fa-handshake' },
     { to: '/admin/autores', label: 'Autores', icon: 'fas fa-user-edit' },
     { to: '/admin/categorias', label: 'Categorías', icon: 'fas fa-tags' },

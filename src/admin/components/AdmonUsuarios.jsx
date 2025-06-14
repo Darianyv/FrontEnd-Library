@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function Usuarios() {
+export default function AdmonUsuario() {
   const [usuarios, setUsuarios] = useState([]);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

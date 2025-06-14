@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default function LibrosGaleria() {
+export default function AdmonLibros() {
   const [books, setBooks] = useState([]);
   const [autores, setAutores] = useState([]);
   const [categorias, setCategorias] = useState([]);
@@ -11,6 +10,7 @@ export default function LibrosGaleria() {
   const [titulo, setTitulo] = useState('');
   const [autorId, setAutorId] = useState('');
   const [categoriaId, setCategoriaId] = useState('');
+  const [imagenUrl, setImagenUrl] = useState('');
   const [editando, setEditando] = useState(null);
 
   useEffect(() => {
@@ -18,15 +18,16 @@ export default function LibrosGaleria() {
     fetch('http://localhost:8080/api/autores')
       .then(res => res.json())
       .then(data => setAutores(data))
-      .catch(err => console.error('Error al cargar autores:', err));
+      .catch(() => setError('Error al cargar autores'));
 
     fetch('http://localhost:8080/api/categorias')
       .then(res => res.json())
       .then(data => setCategorias(data))
-      .catch(err => console.error('Error al cargar categorías:', err));
+      .catch(() => setError('Error al cargar categorías'));
   }, []);
 
   const cargarLibros = () => {
+    setLoading(true);
     fetch('http://localhost:8080/libros')
       .then(res => {
         if (!res.ok) throw new Error('Error al cargar los libros');
@@ -46,30 +47,45 @@ export default function LibrosGaleria() {
     setTitulo('');
     setAutorId('');
     setCategoriaId('');
+    setImagenUrl('');
     setEditando(null);
+    setError(null);
   };
 
   const handleEdit = (libro) => {
     setTitulo(libro.titulo);
     setAutorId(libro.autor?.id || '');
     setCategoriaId(libro.categoria?.id || '');
+    setImagenUrl(libro.imagenUrl || '');
     setEditando(libro.id);
+    setError(null);
   };
 
   const handleDelete = (id) => {
-    if (confirm('¿Estás seguro de eliminar este libro?')) {
+    if (window.confirm('¿Estás seguro de eliminar este libro?')) {
       fetch(`http://localhost:8080/libros/${id}`, { method: 'DELETE' })
-        .then(() => cargarLibros())
+        .then(res => {
+          if (!res.ok) throw new Error('Error al eliminar el libro');
+          cargarLibros();
+        })
         .catch(err => setError(err.message));
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError(null);
+
+    if (!titulo || !autorId || !categoriaId) {
+      setError('Todos los campos son obligatorios');
+      return;
+    }
+
     const libro = {
       titulo,
       autor: { id: autorId },
       categoria: { id: categoriaId },
+      imagenUrl,
     };
 
     const url = editando
@@ -82,7 +98,8 @@ export default function LibrosGaleria() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(libro),
     })
-      .then(() => {
+      .then(res => {
+        if (!res.ok) throw new Error('Error al guardar el libro');
         cargarLibros();
         resetFormulario();
       })
@@ -99,7 +116,7 @@ export default function LibrosGaleria() {
       </div>
 
       <form onSubmit={handleSubmit} className="row g-3 mb-4">
-        <div className="col-md-4">
+        <div className="col-md-3">
           <input
             type="text"
             className="form-control"
@@ -109,7 +126,7 @@ export default function LibrosGaleria() {
             required
           />
         </div>
-        <div className="col-md-3">
+        <div className="col-md-2">
           <select
             className="form-select"
             value={autorId}
@@ -122,7 +139,7 @@ export default function LibrosGaleria() {
             ))}
           </select>
         </div>
-        <div className="col-md-3">
+        <div className="col-md-2">
           <select
             className="form-select"
             value={categoriaId}
@@ -134,6 +151,15 @@ export default function LibrosGaleria() {
               <option key={c.id} value={c.id}>{c.nombre}</option>
             ))}
           </select>
+        </div>
+        <div className="col-md-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="URL de la imagen"
+            value={imagenUrl}
+            onChange={(e) => setImagenUrl(e.target.value)}
+          />
         </div>
         <div className="col-md-2">
           <button type="submit" className="btn btn-primary w-100">
@@ -149,7 +175,14 @@ export default function LibrosGaleria() {
         {books.map((book) => (
           <div className="col-md-4" key={book.id}>
             <div className="card shadow-sm h-100">
+              <img
+                src={book.imagenUrl || 'https://placehold.co/220x260?text=Libro'}
+                alt={book.titulo || 'Sin título'}
+                className="card-img-top"
+                style={{ height: 220, objectFit: 'cover' }}
+              />
               <div className="card-body">
+                <h5 className="card-title">{book.titulo || 'Sin título'}</h5>
                 <p><strong>Autor:</strong> {book.autor?.nombre}</p>
                 <p><strong>Categoría:</strong> {book.categoria?.nombre}</p>
               </div>
