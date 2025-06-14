@@ -6,12 +6,17 @@ import Libros from './frontend/pages/Libros';
 import Prestamos from './frontend/pages/Prestamos';
 import Login from './frontend/pages/Login';
 import Registro from './frontend/pages/Registro';
+
 import Aside from './admin/components/Aside';
 import Content from './admin/components/Content';
 import Header from './admin/components/Header';
+import LibrosGaleria from './admin/components/LibrosGaleria';
+import Usuarios from './admin/components/Usuarios'; 
+
 import ProtectedRoute from './frontend/components/ProtectedRoute';
-import './assets/styles/styles.css';
 import ClienteDashboard from './frontend/components/ClienteDashboard';
+
+import './assets/styles/styles.css';
 
 function App() {
   return (
@@ -26,7 +31,7 @@ function App() {
         <Route path="/libros" element={<Libros />} />
         <Route path="/prestamos" element={<Prestamos />} />
 
-        {/* Ruta protegida para admin */}
+        {/* Ruta protegida para admin: dashboard */}
         <Route
           path="/admin"
           element={
@@ -41,6 +46,39 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* Ruta protegida para admin: galería de libros */}
+        <Route
+          path="/admin/libros"
+          element={
+            <ProtectedRoute role="admin">
+              <div className="d-flex">
+                <Aside />
+                <div className="flex-grow-1">
+                  <Header />
+                  <LibrosGaleria />
+                </div>
+              </div>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ✅ Ruta protegida para admin: usuarios */}
+        <Route
+          path="/admin/usuarios"
+          element={
+            <ProtectedRoute role="admin">
+              <div className="d-flex">
+                <Aside />
+                <div className="flex-grow-1">
+                  <Header />
+                  <Usuarios />
+                </div>
+              </div>
+            </ProtectedRoute>
+          }
+        />
+
         {/* Ruta protegida para cliente */}
         <Route
           path="/cliente"
